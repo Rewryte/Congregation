@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Congregation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script id="AliasMap" type="application/json">
+    {
+    "genes": 1, "gene": 1, "gen": 1, "ge": 1, "gn": 1,
+    "exodu": 2, "exod": 2, "exo": 2, "ex": 2,
+    "levit": 3, "levi": 3, "lev": 3, "le": 3, "lv": 3,
+    "numbe": 4, "numb": 4, "num": 4, "nu": 4, "nm": 4, "nb": 4,
+    "deute": 5, "deut": 5, "deu": 5, "de": 5, "dt": 5,
+    "joshu": 6, "josh": 6, "jos": 6, "jsh": 6,
+    "judge": 7, "judg": 7, "jdgs": 7, "jud": 7, "jdg": 7, "jgs": 7, "jg": 7,
+    "ruth": 8, "rth": 8, "rut": 8, "ru": 8,
+    "1samue": 9, "1samu": 9, "1sam": 9, "1sa": 9, "1sm": 9,
+    "2samue": 10, "2samu": 10, "2sam": 10, "2sa": 10, "2sm": 10,
+    "1kings": 11, "1king": 11, "1kin": 11, "1kgs": 11, "1ki": 11,
+    "2kings": 12, "2king": 12, "2kin": 12, "2kgs": 12, "2ki": 12,
+    "1chron": 13, "1chro": 13, "1chr": 13, "1ch": 13,
+    "2chron": 14, "2chro": 14, "2chr": 14, "2ch": 14,
+    "ezra": 15, "ezr": 15,
+    "nehem": 16, "nehe": 16, "neh": 16, "ne": 16,
+    "esthe": 17, "esth": 17, "est": 17, "es": 17,
+    "job": 18, "jb": 18,
+    "psalm": 19, "psal": 19, "pslm": 19, "psa": 19, "psm": 19, "pss": 19, "ps": 19,
+    "prove": 20, "prov": 20, "pro": 20, "prv": 20, "pr": 20,
+    "eccle": 21, "eccl": 21, "ecc": 21, "ec": 21, "qohel": 21, "qoh": 21,
+    "songs": 22, "song": 22, "sng": 22, "sos": 22, "so": 22, "sg": 22, "canti": 22, "can": 22,
+    "isaia": 23, "isai": 23, "isa": 23, "is": 23,
+    "jerem": 24, "jere": 24, "jer": 24, "je": 24, "jr": 24,
+    "lamen": 25, "lame": 25, "lam": 25, "la": 25, "lm": 25,
+    "ezeki": 26, "ezek": 26, "eze": 26, "ezk": 26, "ez": 26,
+    "danie": 27, "dani": 27, "dan": 27, "da": 27, "dn": 27,
+    "hosea": 28, "hose": 28, "hos": 28, "ho": 28, "hs": 28,
+    "joel": 29, "joe": 29, "jol": 29, "jl": 29,
+    "amos": 30, "amo": 30, "am": 30,
+    "obadi": 31, "obad": 31, "oba": 31, "ob": 31,
+    "jonah": 32, "jona": 32, "jon": 32, "jnh": 32,
+    "micah": 33, "mica": 33, "mic": 33, "mi": 33,
+    "nahum": 34, "nahu": 34, "nah": 34, "nam": 34, "na": 34,
+    "habak": 35, "haba": 35, "hab": 35, "hb": 35,
+    "zepha": 36, "zeph": 36, "zep": 36, "zp": 36,
+    "hagga": 37, "hagg": 37, "hagai": 37, "hag": 37, "hg": 37,
+    "zecha": 38, "zech": 38, "zec": 38, "zc": 38,
+    "malac": 39, "mala": 39, "mal": 39, "ml": 39,
+    "matth": 40, "matt": 40, "mat": 40, "mt": 40,
+    "mark": 41, "mar": 41, "mrk": 41, "mr": 41, "mk": 41,
+    "luke": 42, "luk": 42, "lu": 42, "lk": 42,
+    "john": 43, "joh": 43, "jhn": 43, "jo": 43, "jn": 43,
+    "acts": 44, "act": 44, "ac": 44,
+    "roman": 45, "roma": 45, "rom": 45, "ro": 45, "rm": 45,
+    "1corin": 46, "1cori": 46, "1cor": 46, "1co": 46, "1cr": 46,
+    "2corin": 47, "2cori": 47, "2cor": 47, "2co": 47, "2cr": 47,
+    "galat": 48, "gala": 48, "gal": 48, "ga": 48, "gl": 48,
+    "ephes": 49, "ephe": 49, "eph": 49,
+    "phili": 50, "phil": 50, "php": 50,
+    "colos": 51, "colo": 51, "col": 51,
+    "1thess": 52, "1thes": 52, "1the": 52, "1th": 52,
+    "2thess": 53, "2thes": 53, "2the": 53, "2th": 53,
+    "1timot": 54, "1timo": 54, "1tim": 54, "1ti": 54, "1tm": 54,
+    "2timot": 55, "2timo": 55, "2tim": 55, "2ti": 55, "2tm": 55,
+    "titus": 56, "titu": 56, "tit": 56,
+    "phile": 57, "phlm": 57, "phm": 57,
+    "hebre": 58, "hebr": 58, "heb": 58,
+    "james": 59, "jame": 59, "jas": 59, "jm": 59,
+    "1peter": 60, "1pete": 60, "1pet": 60, "1pe": 60, "1pt": 60,
+    "2peter": 61, "2pete": 61, "2pet": 61, "2pe": 61, "2pt": 61,
+    "1john": 62, "1joh": 62, "1jhn": 62, "1jo": 62, "1jn": 62,
+    "2john": 63, "2joh": 63, "2jhn": 63, "2jo": 63, "2jn": 63,
+    "3john": 64, "3joh": 64, "3jhn": 64, "3jo": 64, "3jn": 64,
+    "jude": 65, "jde": 65,
+    "revel": 66, "reve": 66, "rev": 66, "re": 66, "rv": 66
+    }
+  </script> 
+  <script id="VerseMap" type="application/json">
+    {
+    "Genesis": { "1": 31, "2": 25, "3": 24, "4": 26, "5": 32, "6": 22, "7": 24, "8": 22, "9": 29, "10": 32, "11": 32, "12": 20, "13": 18, "14": 24, "15": 21, "16": 16, "17": 27, "18": 33, "19": 38, "20": 18, "21": 34, "22": 24, "23": 20, "24": 67, "25": 34, "26": 35, "27": 46, "28": 22, "29": 35, "30": 43, "31": 55, "32": 32, "33": 20, "34": 31, "35": 29, "36": 43, "37": 36, "38": 30, "39": 23, "40": 23, "41": 57, "42": 38, "43": 34, "44": 34, "45": 28, "46": 34, "47": 31, "48": 22, "49": 33, "50": 26 },
+    "Exodus": { "1": 22, "2": 25, "3": 22, "4": 31, "5": 23, "6": 30, "7": 25, "8": 19, "9": 35, "10": 29, "11": 10, "12": 51, "13": 22, "14": 31, "15": 27, "16": 36, "17": 16, "18": 27, "19": 25, "20": 26, "21": 36, "22": 31, "23": 33, "24": 18, "25": 40, "26": 37, "27": 21, "28": 43, "29": 46, "30": 38, "31": 18, "32": 35, "33": 23, "34": 35, "35": 35, "36": 38, "37": 29, "38": 31, "39": 43, "40": 38 },
+    "Leviticus": { "1": 17, "2": 16, "3": 17, "4": 35, "5": 19, "6": 30, "7": 38, "8": 36, "9": 24, "10": 20, "11": 47, "12": 8, "13": 59, "14": 57, "15": 33, "16": 34, "17": 16, "18": 30, "19": 37, "20": 27, "21": 24, "22": 33, "23": 44, "24": 23, "25": 55, "26": 46, "27": 34 },
+    "Numbers": { "1": 54, "2": 34, "3": 51, "4": 49, "5": 31, "6": 27, "7": 89, "8": 26, "9": 23, "10": 36, "11": 35, "12": 16, "13": 33, "14": 45, "15": 41, "16": 50, "17": 13, "18": 32, "19": 22, "20": 29, "21": 35, "22": 41, "23": 30, "24": 25, "25": 18, "26": 65, "27": 23, "28": 31, "29": 40, "30": 16, "31": 54, "32": 42, "33": 56, "34": 29, "35": 34, "36": 13 },
+    "Deuteronomy": { "1": 46, "2": 37, "3": 29, "4": 49, "5": 33, "6": 25, "7": 26, "8": 20, "9": 29, "10": 22, "11": 32, "12": 32, "13": 18, "14": 29, "15": 23, "16": 17, "17": 20, "18": 22, "19": 21, "20": 20, "21": 23, "22": 30, "23": 25, "24": 22, "25": 19, "26": 19, "27": 26, "28": 68, "29": 29, "30": 20, "31": 30, "32": 52, "33": 29, "34": 12 },
+    "Joshua": { "1": 18, "2": 24, "3": 17, "4": 24, "5": 15, "6": 27, "7": 26, "8": 35, "9": 27, "10": 43, "11": 15, "12": 24, "13": 33, "14": 15, "15": 63, "16": 10, "17": 18, "18": 28, "19": 51, "20": 9, "21": 45, "22": 34, "23": 16, "24": 33 },
+    "Judges": { "1": 36, "2": 23, "3": 31, "4": 24, "5": 31, "6": 40, "7": 25, "8": 35, "9": 57, "10": 18, "11": 40, "12": 15, "13": 25, "14": 20, "15": 20, "16": 31, "17": 13, "18": 31, "19": 30, "20": 48, "21": 25 },
+    "Ruth": { "1": 22, "2": 23, "3": 18, "4": 22 },
+    "1Samuel": { "1": 28, "2": 36, "3": 21, "4": 22, "5": 12, "6": 21, "7": 17, "8": 22, "9": 27, "10": 27, "11": 15, "12": 25, "13": 23, "14": 52, "15": 35, "16": 23, "17": 58, "18": 30, "19": 24, "20": 42, "21": 15, "22": 23, "23": 29, "24": 22, "25": 44 },
+    "2Samuel": { "1": 27, "2": 32, "3": 39, "4": 12, "5": 25, "6": 23, "7": 29, "8": 18, "9": 13, "10": 19, "11": 27, "12": 31, "13": 39, "14": 33, "15": 37, "16": 23, "17": 29, "18": 33, "19": 43, "20": 26, "21": 22, "22": 51, "23": 39, "24": 25 },
+    "1Kings": { "1": 53, "2": 46, "3": 28, "4": 34, "5": 32, "6": 38, "7": 51, "8": 66, "9": 28, "10": 29, "11": 43, "12": 33, "13": 34, "14": 31, "15": 34, "16": 34, "17": 24, "18": 46, "19": 21, "20": 43, "21": 29, "22": 53 },
+    "2Kings": { "1": 18, "2": 25, "3": 27, "4": 44, "5": 27, "6": 33, "7": 20, "8": 29, "9": 37, "10": 36, "11": 21, "12": 21, "13": 25, "14": 29, "15": 38, "16": 20, "17": 41, "18": 37, "19": 37, "20": 21, "21": 26, "22": 20, "23": 37, "24": 20, "25": 30 },
+    "1Chronicles": { "1": 54, "2": 55, "3": 24, "4": 43, "5": 26, "6": 81, "7": 40, "8": 40, "9": 44, "10": 14, "11": 47, "12": 40, "13": 14, "14": 17, "15": 29, "16": 43, "17": 27, "18": 17, "19": 15, "20": 8, "21": 30, "22": 19, "23": 32, "24": 31, "25": 31, "26": 32, "27": 34, "28": 21, "29": 30 },
+    "2Chronicles": { "1": 17, "2": 18, "3": 17, "4": 22, "5": 14, "6": 42, "7": 22, "8": 18, "9": 31, "10": 19, "11": 23, "12": 16, "13": 22, "14": 14, "15": 19, "16": 14, "17": 19, "18": 34, "19": 11, "20": 37, "21": 20, "22": 12, "23": 21, "24": 27, "25": 30, "26": 23, "27": 9, "28": 27, "29": 36, "30": 27, "31": 21, "32": 33, "33": 25, "34": 33, "35": 27, "36": 23 },
+    "Ezra": { "1": 11, "2": 70, "3": 13, "4": 24, "5": 17, "6": 22, "7": 28, "8": 36, "9": 15, "10": 44 },
+    "Nehemiah": { "1": 11, "2": 20, "3": 32, "4": 23, "5": 19, "6": 19, "7": 73, "8": 18, "9": 38, "10": 39, "11": 36, "12": 47, "13": 31 },
+    "Esther": { "1": 22, "2": 23, "3": 15, "4": 17, "5": 14, "6": 14, "7": 10, "8": 17, "9": 32, "10": 3 },
+    "Job": { "1": 22, "2": 13, "3": 26, "4": 21, "5": 27, "6": 30, "7": 21, "8": 22, "9": 35, "10": 22, "11": 20, "12": 25, "13": 28, "14": 22, "15": 35, "16": 22, "17": 16, "18": 21, "19": 29, "20": 29, "21": 34, "22": 30, "23": 17, "24": 25, "25": 6, "26": 14, "27": 23, "28": 28, "29": 25, "30": 31, "31": 40, "32": 22, "33": 33, "34": 37, "35": 16, "36": 33, "37": 24, "38": 41, "39": 30, "40": 24, "41": 34, "42": 6 },
+    "Psalms": { "1": 6, "2": 12, "3": 8, "4": 8, "5": 12, "6": 10, "7": 17, "8": 10, "9": 20, "10": 18, "11": 7, "12": 8, "13": 6, "14": 7, "15": 5, "16": 11, "17": 15, "18": 50, "19": 14, "20": 9, "21": 13, "22": 31, "23": 6, "24": 10, "25": 22, "26": 12, "27": 14, "28": 9, "29": 11, "30": 12, "31": 24, "32": 11, "33": 22, "34": 22, "35": 28, "36": 12, "37": 40, "38": 22, "39": 13, "40": 17, "41": 13, "42": 11, "43": 5, "44": 26, "45": 17, "46": 11, "47": 9, "48": 14, "49": 15, "50": 23, "51": 19, "52": 9, "53": 6, "54": 7, "55": 23, "56": 13, "57": 11, "58": 12, "59": 17, "60": 12, "61": 12, "62": 12, "63": 11, "64": 10, "65": 13, "66": 20, "67": 7, "68": 35, "69": 36, "70": 5, "71": 24, "72": 20, "73": 28, "74": 23, "75": 10, "76": 12, "77": 20, "78": 72, "79": 13, "80": 19, "81": 16, "82": 8, "83": 18, "84": 12, "85": 13, "86": 17, "87": 7, "88": 18, "89": 52, "90": 17, "91": 16, "92": 15, "93": 5, "94": 23, "95": 11, "96": 13, "97": 12, "98": 9, "99": 9, "100": 5, "101": 8, "102": 28, "103": 22, "104": 35, "105": 45, "106": 48, "107": 43, "108": 29, "109": 31, "110": 7, "111": 10, "112": 10, "113": 9, "114": 8, "115": 18, "116": 19, "117": 2, "118": 29, "119": 176, "120": 7, "121": 8, "122": 9, "123": 4, "124": 8, "125": 5, "126": 6, "127": 5, "128": 6, "129": 8, "130": 8, "131": 3, "132": 18, "133": 3, "134": 3, "135": 21, "136": 26, "137": 9, "138": 8, "139": 24, "140": 13, "141": 10, "142": 7, "143": 12, "144": 15, "145": 21, "146": 10, "147": 20, "148": 14, "149": 9, "150": 6 },
+    "Proverbs": { "1": 33, "2": 22, "3": 35, "4": 27, "5": 23, "6": 35, "7": 27, "8": 36, "9": 18, "10": 32, "11": 31, "12": 28, "13": 25, "14": 35, "15": 33, "16": 33, "17": 28, "18": 24, "19": 29, "20": 30, "21": 31, "22": 29, "23": 35, "24": 34, "25": 28, "26": 28, "27": 27, "28": 28, "29": 27, "30": 33, "31": 31 },
+    "Ecclesiastes": { "1": 18, "2": 26, "3": 22, "4": 16, "5": 20, "6": 12, "7": 29, "8": 17, "9": 18, "10": 20, "11": 10, "12": 14 },
+    "SongofSolomon": { "1": 17, "2": 17, "3": 11, "4": 16, "5": 16, "6": 13, "7": 13, "8": 14 },
+    "Isaiah": { "1": 31, "2": 22, "3": 26, "4": 6, "5": 30, "6": 13, "7": 25, "8": 22, "9": 21, "10": 34, "11": 16, "12": 6, "13": 22, "14": 32, "15": 9, "16": 14, "17": 14, "18": 7, "19": 25, "20": 6, "21": 17, "22": 25, "23": 18, "24": 23, "25": 12, "26": 21, "27": 13, "28": 29, "29": 24, "30": 33, "31": 9, "32": 20, "33": 24, "34": 31, "35": 10, "36": 22, "37": 38, "38": 22, "39": 8, "40": 31, "41": 29, "42": 25, "43": 28, "44": 28, "45": 25, "46": 13, "47": 15, "48": 22, "49": 26, "50": 11, "51": 23, "52": 15, "53": 12, "54": 17, "55": 13, "56": 12, "57": 21, "58": 14, "59": 21, "60": 22, "61": 11, "62": 12, "63": 19, "64": 12, "65": 25, "66": 24 },
+    "Jeremiah": { "1": 19, "2": 37, "3": 25, "4": 31, "5": 31, "6": 30, "7": 34, "8": 22, "9": 26, "10": 25, "11": 23, "12": 17, "13": 27, "14": 22, "15": 21, "16": 21, "17": 27, "18": 23, "19": 15, "20": 18, "21": 14, "22": 30, "23": 40, "24": 10, "25": 38, "26": 24, "27": 22, "28": 17, "29": 32, "30": 24, "31": 40, "32": 44, "33": 26, "34": 22, "35": 19, "36": 32, "37": 21, "38": 28, "39": 18, "40": 16, "41": 18, "42": 22, "43": 13, "44": 30, "45": 5, "46": 28, "47": 7, "48": 47, "49": 39, "50": 46, "51": 64, "52": 34 },
+    "Lamentations": { "1": 22, "2": 22, "3": 66, "4": 22, "5": 22 },
+    "Ezekiel": { "1": 28, "2": 10, "3": 27, "4": 17, "5": 17, "6": 14, "7": 27, "8": 18, "9": 11, "10": 22, "11": 25, "12": 28, "13": 23, "14": 23, "15": 8, "16": 63, "17": 24, "18": 32, "19": 14, "20": 49, "21": 32, "22": 31, "23": 49, "24": 27, "25": 17, "26": 21, "27": 36, "28": 26, "29": 21, "30": 27, "31": 18, "32": 32, "33": 33, "34": 31, "35": 15, "36": 38, "37": 28, "38": 23, "39": 29, "40": 49, "41": 26, "42": 20, "43": 27, "44": 31, "45": 25, "46": 24, "47": 23, "48": 35 },
+    "Daniel": { "1": 21, "2": 49, "3": 30, "4": 37, "5": 31, "6": 28, "7": 28, "8": 27, "9": 27, "10": 21, "11": 45, "12": 13 },
+    "Hosea": { "1": 11, "2": 23, "3": 5, "4": 19, "5": 15, "6": 11, "7": 16, "8": 14, "9": 17, "10": 15, "11": 12, "12": 14, "13": 16, "14": 9 },
+    "Joel": { "1": 20, "2": 32, "3": 21 },
+    "Amos": { "1": 15, "2": 16, "3": 15, "4": 13, "5": 27, "6": 14, "7": 17, "8": 14, "9": 15 },
+    "Obadiah": { "1": 21 },
+    "Jonah": { "1": 17, "2": 10, "3": 10, "4": 11 },
+    "Micah": { "1": 16, "2": 13, "3": 12, "4": 13, "5": 15, "6": 16, "7": 20 },
+    "Nahum": { "1": 15, "2": 13, "3": 19 },
+    "Habakkuk": { "1": 17, "2": 20, "3": 19 },
+    "Zephaniah": { "1": 18, "2": 15, "3": 20 },
+    "Haggai": { "1": 15, "2": 23 },
+    "Zechariah": { "1": 21, "2": 13, "3": 10, "4": 14, "5": 11, "6": 15, "7": 14, "8": 23, "9": 17, "10": 12, "11": 17, "12": 14, "13": 9, "14": 21 },
+    "Malachi": { "1": 14, "2": 17, "3": 18, "4": 6 },
+    "Matthew": { "1": 25, "2": 23, "3": 17, "4": 25, "5": 48, "6": 34, "7": 29, "8": 34, "9": 38, "10": 42, "11": 30, "12": 50, "13": 58, "14": 36, "15": 39, "16": 28, "17": 27, "18": 35, "19": 30, "20": 34, "21": 46, "22": 46, "23": 39, "24": 51, "25": 46, "26": 75, "27": 66, "28": 20 },
+    "Mark": { "1": 45, "2": 28, "3": 35, "4": 41, "5": 43, "6": 56, "7": 37, "8": 38, "9": 50, "10": 52, "11": 33, "12": 44, "13": 37, "14": 72, "15": 47, "16": 20 },
+    "Luke": { "1": 80, "2": 52, "3": 38, "4": 44, "5": 39, "6": 49, "7": 50, "8": 56, "9": 62, "10": 42, "11": 54, "12": 59, "13": 35, "14": 35, "15": 32, "16": 31, "17": 37, "18": 43, "19": 48, "20": 47, "21": 38, "22": 71, "23": 56, "24": 53 },
+    "John": { "1": 51, "2": 25, "3": 36, "4": 54, "5": 47, "6": 71, "7": 53, "8": 59, "9": 41, "10": 42, "11": 57, "12": 50, "13": 38, "14": 31, "15": 27, "16": 33, "17": 26, "18": 40, "19": 42, "20": 31, "21": 25 },
+    "Acts": { "1": 26, "2": 47, "3": 26, "4": 37, "5": 42, "6": 15, "7": 60, "8": 40, "9": 43, "10": 48, "11": 30, "12": 25, "13": 52, "14": 28, "15": 41, "16": 40, "17": 34, "18": 28, "19": 41, "20": 38, "21": 40, "22": 30, "23": 35, "24": 27, "25": 27, "26": 32, "27": 44, "28": 31 },
+    "Romans": { "1": 32, "2": 29, "3": 31, "4": 25, "5": 21, "6": 23, "7": 25, "8": 39, "9": 33, "10": 21, "11": 36, "12": 21, "13": 14, "14": 23, "15": 33, "16": 27 },
+    "1Corinthians": { "1": 31, "2": 16, "3": 23, "4": 21, "5": 13, "6": 20, "7": 40, "8": 13, "9": 27, "10": 33, "11": 34, "12": 31, "13": 13, "14": 40, "15": 58, "16": 24 },
+    "2Corinthians": { "1": 24, "2": 17, "3": 18, "4": 18, "5": 21, "6": 18, "7": 16, "8": 24, "9": 15, "10": 18, "11": 33, "12": 21, "13": 14 },
+    "Galatians": { "1": 24, "2": 21, "3": 29, "4": 31, "5": 26, "6": 18 },
+    "Ephesians": { "1": 23, "2": 22, "3": 21, "4": 32, "5": 33, "6": 24 },
+    "Philippians": { "1": 30, "2": 30, "3": 21, "4": 23 },
+    "Colossians": { "1": 29, "2": 23, "3": 25, "4": 18 },
+    "1Thessalonians": { "1": 10, "2": 20, "3": 13, "4": 18, "5": 28 },
+    "2Thessalonians": { "1": 12, "2": 17, "3": 18 },
+    "1Timothy": { "1": 20, "2": 15, "3": 16, "4": 16, "5": 25, "6": 21 },
+    "2Timothy": { "1": 18, "2": 26, "3": 17, "4": 22 },
+    "Titus": { "1": 16, "2": 15, "3": 15 },
+    "Philemon": { "1": 25 },
+    "Hebrews": { "1": 14, "2": 18, "3": 19, "4": 16, "5": 14, "6": 20, "7": 28, "8": 13, "9": 28, "10": 39, "11": 40, "12": 29, "13": 25 },
+    "James": { "1": 27, "2": 26, "3": 18, "4": 17, "5": 20 },
+    "1Peter": { "1": 25, "2": 25, "3": 22, "4": 19, "5": 14 },
+    "2Peter": { "1": 21, "2": 22, "3": 18 },
+    "1John": { "1": 10, "2": 29, "3": 24, "4": 21, "5": 21 },
+    "2John": { "1": 13 },
+    "3John": { "1": 14 },
+    "Jude": { "1": 25 },
+    "Revelation": { "1": 20, "2": 29, "3": 22, "4": 11, "5": 14, "6": 17, "7": 17, "8": 13, "9": 21, "10": 11, "11": 19, "12": 17, "13": 18, "14": 20, "15": 8, "16": 21, "17": 18, "18": 24, "19": 21, "20": 15, "21": 27, "22": 21 }
+    }
+  </script> 
+<div id="Main" class="container position-absolute top-50 start-50 translate-middle align-items-center text-center">
+  <div class="row">
+    <h1 class="display-2">Congregation</h1>
+    <p class="lead">Instant Presentations</p>
+  </div>
+  <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
+    <input type="text" class="form-control" id="MainInput" placeholder="Type text, URLs, references">
+  </div></div>
+  <div class="row"><div>
+    <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Text</button>
+    <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
+    <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
+    <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
+    <button id="VideoBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
+    <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
+    <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
+  </div></div>
+</div>
+<button id="AboutBtn" type="button" class="btn btn-outline-secondary position-absolute bottom-0 end-0 m-4"><i class="fa-solid fa-info"></i></button>
+
+<div id="MainModal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="ModalTitle" class="modal-title"></h4>
+        <button id="ModalCloseBtn" type="button" class="btn-close"></button>
+      </div>
+      <div id="ModalContent" class="modal-body"></div>
+      <div class="modal-footer">
+        <button id="ModalBtn" type="button" class="btn btn-danger">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+    var Connection;
+
+    function IsList( TextStr ) {
+      return /--[^-]/.test( TextStr );
+    }
+
+    function IsValidUrl( Url ) {
+      if ( !Url ) { return false; }
+      const UrlRegex = /[a-z0-9][.][a-z0-9][a-z0-9-]/i;
+      return UrlRegex.test( Url );
+    }
+
+    function FixUrl( Url ) {
+      // Adds url protocol if missing
+      const ProtocolRegex = /^[a-z0-9]+:\/+[a-z0-9][a-z0-9-]/i;
+      if ( ProtocolRegex.test( Url ) ) { return Url; }
+      return Url.replace( /^:?\/*/i, "https://" );
+    }
+
+    const AliasMap = JSON.parse( document.getElementById( "AliasMap" ).textContent );
+    const VerseMap = JSON.parse( document.getElementById( "VerseMap" ).textContent );
+    function ParseBible( Ref ) {
+      // Split reference into Book, Chapter, Start verse, End verse
+      const RefRegex = /(?<book>[1-3]?[^a-z0-9]*[a-z]{1,5})[^\d]*(?<chapter>\d+)[^\d]+(?<startverse>\d+)-?(?<endverse>\d*)/i;
+      const Match = RefRegex.exec( Ref );
+      if ( !Match ) { return; }
+
+      // Standardize book and validate chapter and verse
+      const Book = Object.keys( VerseMap )[ AliasMap[ Match.groups.book.replace(/[^a-z0-9]/gi, "").toLowerCase() ] - 1 ];
+      if ( !Book ) { return; }
+      const Chapter = parseInt( Match.groups.chapter );
+      const StartVerse = parseInt( Match.groups.startverse );
+      const EndVerse = ( !Match.groups.endverse || +Match.groups.endverse < StartVerse ) ? StartVerse : +Match.groups.endverse;
+      return [ Book, Chapter, StartVerse, EndVerse ];
+    }
+
+    function BibleRefStr( BibleArray ) {
+      const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      if ( EndVerse > StartVerse ) {
+        return Book + " " + Chapter + ":" + StartVerse + "-" + EndVerse;
+      }
+      return Book + " " + Chapter + ":" + StartVerse;
+    }
+
+    function BibliaUrl( BibleArray ) {
+      const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      if ( EndVerse > StartVerse ) {
+        return "https://biblia.com/bible/niv/" + Book + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
+      }
+      return "https://biblia.com/bible/niv/" + Book + "/" + Chapter + "/" + StartVerse;
+    }
+
+    function YoutubeUrl( UrlStr ) {
+      const UrlRegex = /(youtube.com\/watch\?.*v=|youtu.be\/)(?<vid>[\w-]{11})(&|\?)?(?<params>\w+=.+)?/i
+      const Match = UrlRegex.exec( UrlStr );
+      if ( !Match ) { return; }
+      const Vid = Match.groups.vid;
+      const Params = Match.groups.params ? Match.groups.params + "&autoplay=1" : "autoplay=1";
+      return Params ? "https://www.youtube.com/embed/" + Vid  + "?" + Params : "https://www.youtube.com/embed/" + Vid;
+    }
+
+    var Busy;
+    function Present( Data ) {
+      if ( Busy ) { return; }
+      // Start presentation if not started
+      if ( !Connection || Connection.state != "connected" ) {
+        console.log( "Starting presentation" );
+        Busy = true;
+        ShowModal( "Monitor Selection", "Ensure that your projector / screen is connected and set to Extend mode", true );
+        const Request = new PresentationRequest( "presentation.html" );
+        Request
+          .start()
+          .then( ( NewConnection ) => {
+            Connection = NewConnection;
+            // Connection state events
+            Connection.onmessage = () => {
+              console.log( "Connect event called" );
+              SetVisible( "StopBtn", true );
+              Busy = false;
+              Present( Data );
+              HideModal();
+            };
+            Connection.onterminate = () => {
+              console.log( "Terminate event called" );
+              SetVisible( "StopBtn", false );
+            };
+          } )
+          .catch( ( Error ) => {
+            console.log( "Connection attempt aborted" );
+            SetVisible( "StopBtn", false );
+            Busy = false;
+            HideModal();
+          } );
+      } else {
+        // Send data if connected
+        console.log( "Sending " + Data );
+        Connection.send( JSON.stringify( Data ) );
+      }
+    }
+
+    // Modal
+
+    const MainModal = new bootstrap.Modal( document.getElementById( "MainModal" ) );
+    function ShowModal( Title, Content, NoClose = false ) {
+      document.getElementById( "ModalTitle" ).textContent = Title;
+      document.getElementById( "ModalContent" ).textContent = Content;
+      document.getElementById( "ModalBtn" ).disabled = NoClose;
+      MainModal.show();
+    }
+
+    function HideModal() {
+      MainModal.hide();
+    }
+
+    // Drag and drop
+    var ImageData;
+    document.getElementById( "Main" ).addEventListener( "drop", ( Event ) => {
+        // URL or text dropped
+        const DragText = Event.dataTransfer.getData( "text/uri-list" ) || Event.dataTransfer.getData( "text/plain" );
+        if ( DragText ) {
+            document.getElementById( "MainInput" ).value = DragText;
+            MainInput.onkeyup();
+        }
+
+      // File dropped
+      const DragFiles = event.dataTransfer.files;
+      if ( DragFiles.length > 0 ) {
+        const DragFile = DragFiles[0];
+        // File is image
+        if ( DragFile.type.startsWith( "image/" ) ) {
+          // More elegant method that shares URL functions but doesn't work with Presentation API
+          // document.getElementById( "MainInput" ).value = URL.createObjectURL( DragFile );
+          
+          // Convert image to base64 string to be sent
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            ImageData = reader.result;
+            SetVisible( "TextBtn", false );
+            SetVisible( "ListBtn", false );
+            SetVisible( "WebBtn", false );
+            SetVisible( "BibleBtn", false );
+            SetVisible( "ImageBtn", true );
+            // Consider storing object URL first at this point
+          };
+          reader.readAsDataURL( DragFile );
+        }
+      }
+    });
+
+    [ "dragenter", "dragover", "dragleave", "drop" ].forEach( EventName => {
+        document.getElementById( "Main" ).addEventListener( EventName, preventDefaults, false );
+        document.body.addEventListener( EventName, preventDefaults, false );  
+    });
+
+    function preventDefaults( e ) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function SetVisible( Id, Visible ) {
+      document.getElementById( Id ).style.display = Visible ? "" : "none";
+    }
+
+    var TextCache;
+    var BibleRefCache;
+    var VideoUrlCache;
+    // Input box changed
+    MainInput.onkeyup = () => { 
+      var InputText = document.getElementById( "MainInput" ).value;
+      SetVisible( "TextBtn", ( InputText && !IsList( InputText ) ) );
+      SetVisible( "ListBtn", ( InputText && ( TextCache || IsList( InputText ) ) ) );
+      SetVisible( "WebBtn", IsValidUrl( InputText ) );
+      SetVisible( "ImageBtn", false );
+      BibleRefCache = ParseBible( InputText );
+      SetVisible( "BibleBtn", ( BibleRefCache ) );
+      VideoUrlCache = YoutubeUrl( InputText );
+      SetVisible( "VideoBtn", ( VideoUrlCache ) );
+      if ( BibleRefCache ) {console.log( BibliaUrl( BibleRefCache ) );}
+    };
+
+    // Buttons
+    TextBtn.onclick = () => {
+      TextCache = document.getElementById( "MainInput" ).value;
+      document.getElementById( "MainInput" ).value = "";
+      SetVisible( "TextBtn", false );
+      SetVisible( "ListBtn", false );
+      Present( [ "text" , TextCache ] );
+    };
+    ListBtn.onclick = () => {
+      const InputStr = document.getElementById( "MainInput" ).value;
+      // Adds input to previous list unless input is a new list
+      TextCache = ( IsList( InputStr ) ) ? InputStr : TextCache + "--" + InputStr;
+      document.getElementById( "MainInput" ).value = "";
+      SetVisible( "TextBtn", false );
+      SetVisible( "ListBtn", false );
+      Present( [ "text" , TextCache ] );
+    };
+    WebBtn.onclick = () => {
+      const FixedUrl = FixUrl( document.getElementById( "MainInput" ).value );
+      document.getElementById( "MainInput" ).value = FixedUrl;
+      Present( [ "url" , FixedUrl ] );
+    };
+    BibleBtn.onclick = () => {
+      document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
+      Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
+    };
+    VideoBtn.onclick = () => {
+      Present( [ "url" , VideoUrlCache ] );
+    };
+    ImageBtn.onclick = () => { Present( [ "image" , ImageData ] ) };
+    StopBtn.onclick = () => { Connection.terminate() };
+    AboutBtn.onclick = () => { ShowModal( "About", "Follow Congregation's development on https://github.com/Rewryte/Congregation" ) };
+    ModalCloseBtn.onclick = () => { HideModal() };
+    ModalBtn.onclick = () => { HideModal() };
+
+    // Init
+    ShowModal( "Developer Preview", "Congregation is under development and may not function as intended. Presentation API compatible browser such as Chrome, Edge and Opera required." );
+
+    // Handle URL Parameters
+    const UrlParams = new URLSearchParams( window.location.search );
+    if ( UrlParams.has( "q" ) ) {
+      document.getElementById( "MainInput" ).value = UrlParams.get( "q" );
+      MainInput.onkeyup();
+    }
+  </script>
+</body>
+</html>
