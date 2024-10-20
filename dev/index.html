@@ -168,8 +168,8 @@
   </div></div>
 </div>
 <div class="position-absolute bottom-0 end-0 m-4">
-  <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-  <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+  <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+  <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
   <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
 </div>
 
@@ -267,6 +267,8 @@
             Connection.onmessage = () => {
               console.log( "Connect event called" );
               SetVisible( "StopBtn", true );
+              SetVisible( "ZoomInBtn", true );
+              SetVisible( "ZoomOutBtn", true );
               Busy = false;
               Present( Data );
               HideModal();
@@ -274,11 +276,15 @@
             Connection.onterminate = () => {
               console.log( "Terminate event called" );
               SetVisible( "StopBtn", false );
+              SetVisible( "ZoomInBtn", false );
+              SetVisible( "ZoomOutBtn", false );
             };
           } )
           .catch( ( Error ) => {
             console.log( "Connection attempt aborted" );
             SetVisible( "StopBtn", false );
+            SetVisible( "ZoomInBtn", false );
+            SetVisible( "ZoomOutBtn", false );
             Busy = false;
             HideModal();
           } );
