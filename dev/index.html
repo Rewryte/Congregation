@@ -217,7 +217,7 @@
       if ( !Match ) { return; }
 
       // Standardize book and validate chapter and verse
-      const Book = Object.keys( VerseMap )[ AliasMap[ Match.groups.book.replace(/[^a-z0-9]/gi, "").toLowerCase() ] - 1 ];
+      const Book = AliasMap[ Match.groups.book.replace(/[^a-z0-9]/gi, "").toLowerCase() ];
       if ( !Book ) { return; }
       const Chapter = parseInt( Match.groups.chapter );
       const StartVerse = parseInt( Match.groups.startverse );
@@ -227,18 +227,21 @@
 
     function BibleRefStr( BibleArray ) {
       const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      const BookName = Object.keys( VerseMap )[ Book - 1 ];
       if ( EndVerse > StartVerse ) {
-        return Book + " " + Chapter + ":" + StartVerse + "-" + EndVerse;
+        return BookName + " " + Chapter + ":" + StartVerse + "-" + EndVerse;
       }
-      return Book + " " + Chapter + ":" + StartVerse;
+      return BookName + " " + Chapter + ":" + StartVerse;
     }
 
     function BibliaUrl( BibleArray ) {
+      const BibliaBooks = [ "genesis", "exodus", "leviticus", "numbers", "deuteronomy", "joshua", "judges", "ruth", "1-samuel", "2-samuel", "1-kings", "2-kings", "1-chronicles", "2-chronicles", "ezra", "nehemiah", "esther", "job", "psalm", "proverbs", "ecclesiastes", "song-of-solomon", "isaiah", "jeremiah", "lamentations", "ezekiel", "daniel", "hosea", "joel", "amos", "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah", "haggai", "zechariah", "malachi", "matthew", "mark", "luke", "john", "acts", "romans", "1-corinthians", "2-corinthians", "galatians", "ephesians", "philippians", "colossians", "1-thessalonians", "2-thessalonians", "1-timothy", "2-timothy", "titus", "philemon", "hebrews", "james", "1-peter", "2-peter", "1-john", "2-john", "3-john", "jude", "revelation" ];
       const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      const BookName = BibliaBooks[ Book - 1 ];
       if ( EndVerse > StartVerse ) {
-        return "https://biblia.com/bible/niv/" + Book + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
+        return "https://biblia.com/bible/niv/" + BookName + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
       }
-      return "https://biblia.com/bible/niv/" + Book + "/" + Chapter + "/" + StartVerse;
+      return "https://biblia.com/bible/niv/" + BookName + "/" + Chapter + "/" + StartVerse;
     }
 
     function YoutubeUrl( UrlStr ) {
