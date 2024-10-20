@@ -14,16 +14,34 @@
     <h1 id="Title" class="text-center">test</h1>
     <ul id="BulletList" class="list-group"></ul>
   </div>
-  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;"><iframe id="WebIframe" class="vw-100 vh-100"></iframe></div>
+  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;"><iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe></div>
   <img id="ImageView" class="vw-100 vh-100 object-fit-contain bg-black" style="display: none;" alt="image viewer">
   <script>
+    var CurrentView = "LoadView";
+    var CurrentZoom = 1;
     function SwitchView( View ) {
+      console.log( "Changing view to " + View );
+      CurrentView = View;
+      CurrentZoom = 1;
       document.getElementById( "LoadView" ).style.display = "none";
       document.getElementById( "WebView" ).style.display = "none";
       document.getElementById( "TextView" ).style.display = "none";
       document.getElementById( "ImageView" ).style.display = "none";
       document.getElementById( View ).style.display = "";
     }
+
+    function ZoomView( ZoomFloat = 1 ) {
+      console.log( "Changing zoom level to " + ZoomFloat );
+      switch ( CurrentView ) {
+        case "WebView":
+          const TargetElement = document.getElementById( "WebIframe" );
+          TargetElement.style.height = ( 1 / ZoomFloat * 100) + "%";
+          TargetElement.style.width = ( 1 / ZoomFloat * 100) + "%";
+          TargetElement.style.scale = ( ZoomFloat * 100) + "%";
+          break;
+      }
+    }
+
     function HandleText( TextStr ) {
       // Multiple bullet points are separated with double dashes
       const TextArr = TextStr.split( "--" );
@@ -66,6 +84,14 @@
             break;
           case "image":
             HandleImage( data[1] );
+            break;
+          case "zoomin":
+            CurrentZoom += 0.1;
+            ZoomView( CurrentZoom );
+            break;
+          case "zoomout":
+            CurrentZoom -= 0.1;
+            ZoomView( CurrentZoom );
             break;
           default:
             console.log( "Invalid message received: " + Message.data )

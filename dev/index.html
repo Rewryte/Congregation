@@ -167,7 +167,11 @@
     <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
   </div></div>
 </div>
-<button id="AboutBtn" type="button" class="btn btn-outline-secondary position-absolute bottom-0 end-0 m-4"><i class="fa-solid fa-info"></i></button>
+<div class="position-absolute bottom-0 end-0 m-4">
+  <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+  <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+  <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
+</div>
 
 <div id="MainModal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
@@ -397,6 +401,12 @@
     ImageBtn.onclick = () => { Present( [ "image" , ImageData ] ) };
     StopBtn.onclick = () => { Connection.terminate() };
     AboutBtn.onclick = () => { ShowModal( "About", "Follow Congregation's development on https://github.com/Rewryte/Congregation" ) };
+    ZoomInBtn.onclick = () => {
+      Present( [ "zoomin" ] );
+    };
+    ZoomOutBtn.onclick = () => {
+      Present( [ "zoomout" ] );
+    };
     ModalCloseBtn.onclick = () => { HideModal() };
     ModalBtn.onclick = () => { HideModal() };
 
