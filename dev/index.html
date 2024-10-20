@@ -217,11 +217,14 @@
       if ( !Match ) { return; }
 
       // Standardize book and validate chapter and verse
-      const Book = AliasMap[ Match.groups.book.replace(/[^a-z0-9]/gi, "").toLowerCase() ];
+      const Book = AliasMap[ Match.groups.book.replace( /[^a-z0-9]/gi, "" ).toLowerCase() ];
       if ( !Book ) { return; }
       const Chapter = parseInt( Match.groups.chapter );
+      const MaxVerse = VerseMap[ Object.keys( VerseMap )[ Book - 1 ] ][ Chapter ];
+      if ( !MaxVerse ) { return; }
       const StartVerse = parseInt( Match.groups.startverse );
-      const EndVerse = ( !Match.groups.endverse || +Match.groups.endverse < StartVerse ) ? StartVerse : +Match.groups.endverse;
+      if ( StartVerse > MaxVerse ) { return; }
+      const EndVerse = ( !Match.groups.endverse ) ? StartVerse : Math.min( Math.max( +Match.groups.endverse, StartVerse ), MaxVerse );
       return [ Book, Chapter, StartVerse, EndVerse ];
     }
 
