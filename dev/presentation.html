@@ -95,11 +95,11 @@
             HandleImage( data[1] );
             break;
           case "zoomin":
-            CurrentZoom += 0.1;
+            CurrentZoom = Math.min( CurrentZoom + 0.2 , 5 );
             ZoomView( CurrentZoom );
             break;
           case "zoomout":
-            CurrentZoom -= 0.1;
+            CurrentZoom = Math.max( CurrentZoom - 0.2 , 0.2 );
             ZoomView( CurrentZoom );
             break;
           default:
