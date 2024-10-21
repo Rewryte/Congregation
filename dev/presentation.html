@@ -14,8 +14,12 @@
     <h1 id="Title" class="text-center">test</h1>
     <ul id="BulletList" class="list-group"></ul>
   </div>
-  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;"><iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe></div>
-  <img id="ImageView" class="vw-100 vh-100 object-fit-contain bg-black" style="display: none;" alt="image viewer">
+  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;">
+    <iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe>
+  </div>
+  <div id="ImageView" class="container-fluid vw-100 vh-100 bg-black align-items-center">
+    <img id="ImageObj" class="object-fit-contain bg-black" style="height: 100%;width: 100%;scale: 1;transition: width 2s, height 2s, scale 2s;" alt="image viewer">
+  </div>
   <script>
     var CurrentView = "LoadView";
     var CurrentZoom = 1;
@@ -32,11 +36,16 @@
 
     function ZoomView( ZoomFloat = 1 ) {
       console.log( "Changing zoom level to " + ZoomFloat );
+      var TargetElement;
       switch ( CurrentView ) {
         case "WebView":
-          const TargetElement = document.getElementById( "WebIframe" );
+          TargetElement = document.getElementById( "WebIframe" );
           TargetElement.style.height = ( 1 / ZoomFloat * 100) + "%";
           TargetElement.style.width = ( 1 / ZoomFloat * 100) + "%";
+          TargetElement.style.scale = ( ZoomFloat * 100) + "%";
+          break;
+        case "ImageView":
+          TargetElement = document.getElementById( "ImageObj" );
           TargetElement.style.scale = ( ZoomFloat * 100) + "%";
           break;
       }
@@ -62,7 +71,7 @@
       SwitchView( "LoadView" );
     }
     function HandleImage( data ) {
-      document.getElementById( "ImageView" ).src = data;
+      document.getElementById( "ImageObj" ).src = data;
       SwitchView( "ImageView" );
     }
 
