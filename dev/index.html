@@ -212,7 +212,7 @@
     const VerseMap = JSON.parse( document.getElementById( "VerseMap" ).textContent );
     function ParseBible( Ref ) {
       // Split reference into Book, Chapter, Start verse, End verse
-      const RefRegex = /(?<book>[1-3]?[^a-z0-9]*[a-z]{1,5})[^\d]*(?<chapter>\d+)[^\d]+(?<startverse>\d+)-?(?<endverse>\d*)/i;
+      const RefRegex = /(?<book>[1-3]?[^a-z0-9]*[a-z]{1,5})[^\d]*(?<chapter>\d+)[^\d]+(?<startverse>\d+)-?(?<endverse>\d*)[^a-z0-9]*(?<version>[a-z]{0,4})/i;
       const Match = RefRegex.exec( Ref );
       if ( !Match ) { return; }
 
@@ -225,26 +225,28 @@
       const StartVerse = parseInt( Match.groups.startverse );
       if ( StartVerse > MaxVerse ) { return; }
       const EndVerse = ( !Match.groups.endverse ) ? StartVerse : Math.min( Math.max( +Match.groups.endverse, StartVerse ), MaxVerse );
-      return [ Book, Chapter, StartVerse, EndVerse ];
+      const VersionList = [ "csb", "esv", "kjv", "niv", "nlt", "nrsv", "rsv", "msg", "nasb", "nkjv", "net", "hcsb" ];
+      const Version = ( VersionList.includes( Match.groups.version.toLowerCase() ) ) ? Match.groups.version.toLowerCase() : "niv";
+      return [ Book, Chapter, StartVerse, EndVerse, Version ];
     }
 
     function BibleRefStr( BibleArray ) {
-      const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      const [ Book, Chapter, StartVerse, EndVerse, Version ] = BibleArray;
       const BookName = Object.keys( VerseMap )[ Book - 1 ];
-      if ( EndVerse > StartVerse ) {
-        return BookName + " " + Chapter + ":" + StartVerse + "-" + EndVerse;
-      }
-      return BookName + " " + Chapter + ":" + StartVerse;
+      var RetStr = BookName + " " + Chapter + ":" + StartVerse;
+      RetStr += ( EndVerse > StartVerse ) ? "-" + EndVerse : "";
+      RetStr += ( Version != "niv" ) ? " " + Version.toUpperCase() : "";
+      return RetStr;
     }
 
     function BibliaUrl( BibleArray ) {
       const BibliaBooks = [ "genesis", "exodus", "leviticus", "numbers", "deuteronomy", "joshua", "judges", "ruth", "1-samuel", "2-samuel", "1-kings", "2-kings", "1-chronicles", "2-chronicles", "ezra", "nehemiah", "esther", "job", "psalm", "proverbs", "ecclesiastes", "song-of-solomon", "isaiah", "jeremiah", "lamentations", "ezekiel", "daniel", "hosea", "joel", "amos", "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah", "haggai", "zechariah", "malachi", "matthew", "mark", "luke", "john", "acts", "romans", "1-corinthians", "2-corinthians", "galatians", "ephesians", "philippians", "colossians", "1-thessalonians", "2-thessalonians", "1-timothy", "2-timothy", "titus", "philemon", "hebrews", "james", "1-peter", "2-peter", "1-john", "2-john", "3-john", "jude", "revelation" ];
-      const [ Book, Chapter, StartVerse, EndVerse ] = BibleArray;
+      const [ Book, Chapter, StartVerse, EndVerse, Version ] = BibleArray;
       const BookName = BibliaBooks[ Book - 1 ];
       if ( EndVerse > StartVerse ) {
-        return "https://biblia.com/bible/niv/" + BookName + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
+        return "https://biblia.com/bible/" + Version + "/" + BookName + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
       }
-      return "https://biblia.com/bible/niv/" + BookName + "/" + Chapter + "/" + StartVerse;
+      return "https://biblia.com/bible/" + Version + "/" + BookName + "/" + Chapter + "/" + StartVerse;
     }
 
     function YoutubeUrl( UrlStr ) {
