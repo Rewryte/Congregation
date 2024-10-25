@@ -10,9 +10,11 @@
   <div id="LoadView" class="container position-absolute top-50 start-50 translate-middle">
     <h1 class="text-center">Loading <div class="spinner-border" role="status"></div></h1>
   </div>
-  <div id="TextView" class="container position-absolute top-50 start-50 translate-middle" style="display: none;">
-    <h1 id="Title" class="text-center">test</h1>
-    <ul id="BulletList" class="list-group"></ul>
+  <div id="TextView" class="container position-absolute top-50 start-50 translate-middle" style="display: none;transform-origin: top left;transition: width 2s, height 2s, scale 2s;">
+    <div id="TextViewInt" class="container position-absolute top-50 start-50 translate-middle" style="">
+      <h1 id="Title" class="text-center"></h1>
+      <ul id="BulletList" class="list-group"></ul>
+    </div>
   </div>
   <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;">
     <iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe>
@@ -36,8 +38,19 @@
 
     function ZoomView( ZoomFloat = 1 ) {
       console.log( "Changing zoom level to " + ZoomFloat );
-      var TargetElement;
+      var TargetElement, TargetWidth, TargetHeight, TargetScale;
       switch ( CurrentView ) {
+        case "TextView":
+          TargetElement = document.getElementById( "TextView" );
+          // Fixed base resolution for consistency
+          TargetWidth = Math.floor( 800 / ZoomFloat );
+          TargetHeight = Math.floor( 600 / ZoomFloat );
+          // Fit to viewport
+          TargetScale = Math.min( window.innerWidth / TargetWidth, window.innerHeight / TargetHeight );
+          TargetElement.style.width = TargetWidth + "px";
+          TargetElement.style.height = TargetHeight + "px";
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          break;
         case "WebView":
           TargetElement = document.getElementById( "WebIframe" );
           TargetElement.style.height = ( 1 / ZoomFloat * 100) + "%";
