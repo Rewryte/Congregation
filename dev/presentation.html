@@ -12,7 +12,7 @@
   </div>
   <div id="TextView" class="container position-absolute top-50 start-50 translate-middle" style="display: none;transform-origin: top left;transition: width 2s, height 2s, scale 2s;">
     <div id="TextViewInt" class="container position-absolute top-50 start-50 translate-middle" style="">
-      <h1 id="Title" class="text-center"></h1>
+      <h1 id="Title" class="display-2 text-center"></h1>
       <ul id="BulletList" class="list-group"></ul>
     </div>
   </div>
@@ -73,7 +73,7 @@
       // Make an element for each remaining bullet point
       TextArr.forEach( ( BulletStr ) => {
         const ListItem = document.createElement( "li" );
-        ListItem.className = "list-group-item";
+        ListItem.className = "list-group-item fs-3";
         ListItem.textContent = BulletStr;
         document.getElementById( "BulletList" ).appendChild( ListItem );
       });
