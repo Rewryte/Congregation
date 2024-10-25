@@ -53,9 +53,14 @@
           break;
         case "WebView":
           TargetElement = document.getElementById( "WebIframe" );
-          TargetElement.style.height = ( 1 / ZoomFloat * 100) + "%";
-          TargetElement.style.width = ( 1 / ZoomFloat * 100) + "%";
-          TargetElement.style.scale = ( ZoomFloat * 100) + "%";
+          // Fix width but maintain aspect ratio
+          TargetWidth = Math.floor( 1080 / ZoomFloat );
+          TargetHeight = Math.floor( TargetWidth / window.innerWidth * window.innerHeight );
+          // Fit to viewport
+          TargetScale = window.innerWidth / TargetWidth;
+          TargetElement.style.width = TargetWidth + "px";
+          TargetElement.style.height = TargetHeight + "px";
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
           break;
         case "ImageView":
           TargetElement = document.getElementById( "ImageObj" );
