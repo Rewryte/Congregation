@@ -155,9 +155,10 @@
     <p class="lead">Instant Presentations</p>
   </div>
   <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
-    <input type="text" class="form-control" id="MainInput" placeholder="Type text, URLs, references">
+    <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
   </div></div>
   <div class="row"><div>
+    <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images from your desktop.</div>
     <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Text</button>
     <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
     <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
@@ -372,6 +373,7 @@
     // Input box changed
     MainInput.onkeyup = () => { 
       var InputText = document.getElementById( "MainInput" ).value;
+      SetVisible( "TooltipTxt", ( !InputText ) );
       SetVisible( "TextBtn", ( InputText && !IsList( InputText ) ) );
       SetVisible( "ListBtn", ( InputText && ( TextCache || IsList( InputText ) ) ) );
       SetVisible( "WebBtn", IsValidUrl( InputText ) );
