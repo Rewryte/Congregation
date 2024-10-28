@@ -319,39 +319,39 @@
     }
 
     // Drag and drop
-    var ImageData;
     document.getElementById( "Main" ).addEventListener( "drop", ( Event ) => {
-        // URL or text dropped
-        const DragText = Event.dataTransfer.getData( "text/uri-list" ) || Event.dataTransfer.getData( "text/plain" );
-        if ( DragText ) {
-            document.getElementById( "MainInput" ).value = DragText;
-            MainInput.onkeyup();
-        }
-
+      // URL or text dropped
+      const DragText = Event.dataTransfer.getData( "text/uri-list" ) || Event.dataTransfer.getData( "text/plain" );
+      if ( DragText ) {
+          document.getElementById( "MainInput" ).value = DragText;
+          MainInput.onkeyup();
+      }
       // File dropped
       const DragFiles = event.dataTransfer.files;
-      if ( DragFiles.length > 0 ) {
-        const DragFile = DragFiles[0];
-        // File is image
-        if ( DragFile.type.startsWith( "image/" ) ) {
-          // More elegant method that shares URL functions but doesn't work with Presentation API
-          // document.getElementById( "MainInput" ).value = URL.createObjectURL( DragFile );
-          
-          // Convert image to base64 string to be sent
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            ImageData = reader.result;
-            SetVisible( "TextBtn", false );
-            SetVisible( "ListBtn", false );
-            SetVisible( "WebBtn", false );
-            SetVisible( "BibleBtn", false );
-            SetVisible( "ImageBtn", true );
-            // Consider storing object URL first at this point
-          };
-          reader.readAsDataURL( DragFile );
-        }
-      }
+      if ( DragFiles.length > 0 ) { HandleFile( DragFiles[0] ); }
     });
+
+  var FileData;
+  function HandleFile( File ) {
+    // File is image
+    if ( File.type.startsWith( "image/" ) ) {
+      // More elegant method that shares URL functions but doesn't work with Presentation API
+      // document.getElementById( "MainInput" ).value = URL.createObjectURL( DragFile );
+
+      // Convert file to base64 string to be sent
+      const Reader = new FileReader();
+      Reader.onloadend = () => {
+        FileData = Reader.result;
+        SetVisible( "TextBtn", false );
+        SetVisible( "ListBtn", false );
+        SetVisible( "WebBtn", false );
+        SetVisible( "BibleBtn", false );
+        SetVisible( "ImageBtn", true );
+        // Consider storing object URL first at this point
+      };
+      Reader.readAsDataURL( File );
+    }
+  }
 
     [ "dragenter", "dragover", "dragleave", "drop" ].forEach( EventName => {
         document.getElementById( "Main" ).addEventListener( EventName, preventDefaults, false );
@@ -414,7 +414,7 @@
     VideoBtn.onclick = () => {
       Present( [ "url" , VideoUrlCache ] );
     };
-    ImageBtn.onclick = () => { Present( [ "image" , ImageData ] ) };
+    ImageBtn.onclick = () => { Present( [ "image" , FileData ] ) };
     StopBtn.onclick = () => { Connection.terminate() };
     AboutBtn.onclick = () => { ShowModal( "About", "Follow Congregation's development on https://github.com/Rewryte/Congregation" ) };
     ZoomInBtn.onclick = () => {
