@@ -26,6 +26,7 @@
     var CurrentView = "LoadView";
     var CurrentZoom = 1;
     function SwitchView( View ) {
+      if ( View == CurrentView ) { return; }
       console.log( "Changing view to " + View );
       CurrentView = View;
       CurrentZoom = 1;
