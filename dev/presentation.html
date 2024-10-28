@@ -45,8 +45,8 @@
         case "TextView":
           TargetElement = document.getElementById( "TextView" );
           // Fixed base resolution for consistency
-          TargetWidth = Math.floor( 800 / ZoomFloat );
-          TargetHeight = Math.floor( 600 / ZoomFloat );
+          TargetWidth = Math.floor( 960 / ZoomFloat );
+          TargetHeight = Math.floor( 720 / ZoomFloat );
           // Fit to viewport
           TargetScale = Math.min( window.innerWidth / TargetWidth, window.innerHeight / TargetHeight );
           TargetElement.style.width = TargetWidth + "px";
@@ -56,7 +56,7 @@
         case "WebView":
           TargetElement = document.getElementById( "WebIframe" );
           // Fix width but maintain aspect ratio
-          TargetWidth = Math.floor( 1080 / ZoomFloat );
+          TargetWidth = Math.floor( 960 / ZoomFloat );
           TargetHeight = Math.floor( TargetWidth / window.innerWidth * window.innerHeight );
           // Fit to viewport
           TargetScale = window.innerWidth / TargetWidth;
