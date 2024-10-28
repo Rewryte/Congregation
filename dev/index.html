@@ -260,6 +260,7 @@
     }
 
     var Busy;
+    var Request;
     function Present( Data ) {
       if ( Busy ) { return; }
       // Start presentation if not started
@@ -267,7 +268,6 @@
         console.log( "Starting presentation" );
         Busy = true;
         ShowModal( "Monitor Selection", "Ensure that your projector / screen is connected and set to Extend mode", true );
-        const Request = new PresentationRequest( "presentation.html" );
         Request
           .start()
           .then( ( NewConnection ) => {
@@ -427,7 +427,20 @@
     ModalBtn.onclick = () => { HideModal() };
 
     // Init
-    ShowModal( "Developer Preview", "Congregation is under development and may not function as intended. Presentation API compatible browser such as Chrome, Edge and Opera required." );
+    window.addEventListener( "load", () => {
+      try {
+        Request = new PresentationRequest( "presentation.html" );
+        Request
+          .getAvailability()
+          // Warning message if no monitors available
+          .then( ( Availability ) => { if ( !Availability.value ) {
+            ShowModal( "No Monitors Detected", "As a presentation software, Congregation requires a second monitor to function. Please ensure that your monitor / projector is turned on and set to Extend mode." );
+            Availability.onchange = () => { if ( Availability.value ) { Availability.onchange = null; HideModal(); } }
+          } } )
+          // Warning message if availability checking fails
+          .catch( () => { ShowModal( "Incompatible Browser", "Congregation requires a Presentation API compatible browser to function. Please use a supported browser such as Google Chrome, Microsoft Edge or Opera." ); } );
+      } catch ( Error ) { ShowModal( "Incompatible Browser", "Congregation requires a Presentation API compatible browser to function. Please use a supported browser such as Google Chrome, Microsoft Edge or Opera." ); }
+    });
 
     // Handle URL Parameters
     const UrlParams = new URLSearchParams( window.location.search );
