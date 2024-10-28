@@ -46,6 +46,12 @@
       console.log( "Changing zoom level to " + ZoomFloat );
       var TargetElement, TargetWidth, TargetHeight, TargetScale;
       switch ( CurrentView ) {
+        case "LoadView":
+          TargetElement = document.getElementById( "LoadView" );
+          // Fit to viewport
+          TargetScale = Math.min( window.innerWidth / 960, window.innerHeight / 720 );
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          break;
         case "TextView":
           TargetElement = document.getElementById( "TextView" );
           // Fixed base resolution for consistency
