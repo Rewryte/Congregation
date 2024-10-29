@@ -158,13 +158,15 @@
     <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
   </div></div>
   <div class="row"><div>
-    <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images from your desktop.</div>
+    <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images, videos or PDF files from your desktop.</div>
     <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Text</button>
     <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
     <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
     <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
-    <button id="VideoBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
+    <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
+    <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
     <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
+    <button id="VideoBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-video"></i><br>Video</button>
     <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
   </div></div>
 </div>
@@ -331,27 +333,58 @@
       if ( DragFiles.length > 0 ) { HandleFile( DragFiles[0] ); }
     });
 
-  var FileData;
-  function HandleFile( File ) {
-    // File is image
-    if ( File.type.startsWith( "image/" ) ) {
-      // More elegant method that shares URL functions but doesn't work with Presentation API
-      // document.getElementById( "MainInput" ).value = URL.createObjectURL( DragFile );
-
-      // Convert file to base64 string to be sent
-      const Reader = new FileReader();
-      Reader.onloadend = () => {
-        FileData = Reader.result;
-        SetVisible( "TextBtn", false );
-        SetVisible( "ListBtn", false );
-        SetVisible( "WebBtn", false );
-        SetVisible( "BibleBtn", false );
-        SetVisible( "ImageBtn", true );
-        // Consider storing object URL first at this point
-      };
-      Reader.readAsDataURL( File );
+    var FileData;
+    function HandleFile( File ) {
+      if ( File.type == "application/pdf" ) {
+        // PDF Files
+        const Reader = new FileReader();
+        Reader.onloadend = () => {
+          FileData = Reader.result;
+          SetVisible( "TextBtn", false );
+          SetVisible( "ListBtn", false );
+          SetVisible( "WebBtn", false );
+          SetVisible( "BibleBtn", false );
+          SetVisible( "PdfBtn", true );
+          SetVisible( "YouTubeBtn", false );
+          SetVisible( "ImageBtn", false );
+          SetVisible( "VideoBtn", false );
+          // Consider storing object URL first at this point
+        };
+        Reader.readAsDataURL( File );
+      } else if ( File.type.startsWith( "image/" ) ) {
+        // Image Files
+        const Reader = new FileReader();
+        Reader.onloadend = () => {
+          FileData = Reader.result;
+          SetVisible( "TextBtn", false );
+          SetVisible( "ListBtn", false );
+          SetVisible( "WebBtn", false );
+          SetVisible( "BibleBtn", false );
+          SetVisible( "PdfBtn", false );
+          SetVisible( "YouTubeBtn", false );
+          SetVisible( "ImageBtn", true );
+          SetVisible( "VideoBtn", false );
+          // Consider storing object URL first at this point
+        };
+        Reader.readAsDataURL( File );
+      } else if ( File.type.startsWith( "video/" ) ) {
+        // Video Files
+        const Reader = new FileReader();
+        Reader.onloadend = () => {
+          FileData = Reader.result;
+          SetVisible( "TextBtn", false );
+          SetVisible( "ListBtn", false );
+          SetVisible( "WebBtn", false );
+          SetVisible( "BibleBtn", false );
+          SetVisible( "PdfBtn", false );
+          SetVisible( "YouTubeBtn", false );
+          SetVisible( "ImageBtn", false );
+          SetVisible( "VideoBtn", true );
+          // Consider storing object URL first at this point
+        };
+        Reader.readAsDataURL( File );
+      }
     }
-  }
 
     [ "dragenter", "dragover", "dragleave", "drop" ].forEach( EventName => {
         document.getElementById( "Main" ).addEventListener( EventName, preventDefaults, false );
@@ -377,11 +410,13 @@
       SetVisible( "TextBtn", ( InputText && !IsList( InputText ) ) );
       SetVisible( "ListBtn", ( InputText && ( TextCache || IsList( InputText ) ) ) );
       SetVisible( "WebBtn", IsValidUrl( InputText ) );
+      SetVisible( "PdfBtn", false );
       SetVisible( "ImageBtn", false );
+      SetVisible( "VideoBtn", false );
       BibleRefCache = ParseBible( InputText );
       SetVisible( "BibleBtn", ( BibleRefCache ) );
       VideoUrlCache = YoutubeUrl( InputText );
-      SetVisible( "VideoBtn", ( VideoUrlCache ) );
+      SetVisible( "YouTubeBtn", ( VideoUrlCache ) );
       if ( BibleRefCache ) {console.log( BibliaUrl( BibleRefCache ) );}
     };
 
@@ -411,20 +446,20 @@
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
       Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
     };
-    VideoBtn.onclick = () => {
-      Present( [ "url" , VideoUrlCache ] );
-    };
-    ImageBtn.onclick = () => { Present( [ "image" , FileData ] ) };
-    StopBtn.onclick = () => { Connection.terminate() };
-    AboutBtn.onclick = () => { ShowModal( "About", "Follow Congregation's development on https://github.com/Rewryte/Congregation" ) };
+    PdfBtn.onclick = () => { Present( [ "url" , FileData ] ); };
+    YouTubeBtn.onclick = () => { Present( [ "url" , VideoUrlCache ] ); };
+    ImageBtn.onclick = () => { Present( [ "image" , FileData ] ); };
+    VideoBtn.onclick = () => { Present( [ "video" , FileData ] ); };
+    StopBtn.onclick = () => { Connection.terminate(); };
+    AboutBtn.onclick = () => { ShowModal( "About", "Follow Congregation's development on https://github.com/Rewryte/Congregation" ); };
     ZoomInBtn.onclick = () => {
       Present( [ "zoomin" ] );
     };
     ZoomOutBtn.onclick = () => {
       Present( [ "zoomout" ] );
     };
-    ModalCloseBtn.onclick = () => { HideModal() };
-    ModalBtn.onclick = () => { HideModal() };
+    ModalCloseBtn.onclick = () => { HideModal(); };
+    ModalBtn.onclick = () => { HideModal(); };
 
     // Init
     window.addEventListener( "load", () => {
