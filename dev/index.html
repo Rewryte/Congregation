@@ -340,6 +340,7 @@
         const Reader = new FileReader();
         Reader.onloadend = () => {
           FileData = Reader.result;
+          document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
@@ -357,6 +358,7 @@
         const Reader = new FileReader();
         Reader.onloadend = () => {
           FileData = Reader.result;
+          document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
@@ -374,6 +376,7 @@
         const Reader = new FileReader();
         Reader.onloadend = () => {
           FileData = Reader.result;
+          document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
