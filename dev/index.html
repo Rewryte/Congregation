@@ -339,6 +339,11 @@
         // PDF Files
         const Reader = new FileReader();
         Reader.onloadend = () => {
+          if ( !Reader.result ) {
+            // Abort when overly large files can cause FileReader to return an empty string
+            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
+            return;
+          }
           FileData = Reader.result;
           document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
@@ -350,13 +355,17 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", false );
           SetVisible( "VideoBtn", false );
-          // Consider storing object URL first at this point
         };
         Reader.readAsDataURL( File );
       } else if ( File.type.startsWith( "image/" ) ) {
         // Image Files
         const Reader = new FileReader();
         Reader.onloadend = () => {
+          if ( !Reader.result ) {
+            // Abort when overly large files can cause FileReader to return an empty string
+            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
+            return;
+          }
           FileData = Reader.result;
           document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
@@ -368,13 +377,17 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", true );
           SetVisible( "VideoBtn", false );
-          // Consider storing object URL first at this point
         };
         Reader.readAsDataURL( File );
       } else if ( File.type.startsWith( "video/" ) ) {
         // Video Files
         const Reader = new FileReader();
         Reader.onloadend = () => {
+          if ( !Reader.result ) {
+            // Abort when overly large files can cause FileReader to return an empty string
+            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
+            return;
+          }
           FileData = Reader.result;
           document.getElementById( "MainInput" ).value = File.name;
           SetVisible( "TooltipTxt", false );
@@ -386,7 +399,6 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", false );
           SetVisible( "VideoBtn", true );
-          // Consider storing object URL first at this point
         };
         Reader.readAsDataURL( File );
       }
