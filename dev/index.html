@@ -9,6 +9,47 @@
 </head>
 <body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <div id="Main" class="container position-absolute top-50 start-50 translate-middle align-items-center text-center">
+    <div class="row">
+      <h1 class="display-2">Congregation</h1>
+      <p class="lead">Instant Presentations</p>
+    </div>
+    <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
+      <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
+    </div></div>
+    <div class="row"><div>
+      <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images, videos or PDF files from your desktop.</div>
+      <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Text</button>
+      <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
+      <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
+      <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
+      <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
+      <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
+      <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
+      <button id="VideoBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-video"></i><br>Video</button>
+      <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
+    </div></div>
+  </div>
+  <div class="position-absolute bottom-0 end-0 m-4">
+    <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+    <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+    <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
+  </div>
+  
+  <div id="MainModal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="ModalTitle" class="modal-title"></h4>
+          <button id="ModalCloseBtn" type="button" class="btn-close"></button>
+        </div>
+        <div id="ModalContent" class="modal-body"></div>
+        <div class="modal-footer">
+          <button id="ModalBtn" type="button" class="btn btn-danger">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script id="AliasMap" type="application/json">
     {
     "genes": 1, "gene": 1, "gen": 1, "ge": 1, "gn": 1,
@@ -148,49 +189,7 @@
     "Jude": { "1": 25 },
     "Revelation": { "1": 20, "2": 29, "3": 22, "4": 11, "5": 14, "6": 17, "7": 17, "8": 13, "9": 21, "10": 11, "11": 19, "12": 17, "13": 18, "14": 20, "15": 8, "16": 21, "17": 18, "18": 24, "19": 21, "20": 15, "21": 27, "22": 21 }
     }
-  </script> 
-<div id="Main" class="container position-absolute top-50 start-50 translate-middle align-items-center text-center">
-  <div class="row">
-    <h1 class="display-2">Congregation</h1>
-    <p class="lead">Instant Presentations</p>
-  </div>
-  <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
-    <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
-  </div></div>
-  <div class="row"><div>
-    <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images, videos or PDF files from your desktop.</div>
-    <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Text</button>
-    <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
-    <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
-    <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
-    <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
-    <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
-    <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
-    <button id="VideoBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-video"></i><br>Video</button>
-    <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
-  </div></div>
-</div>
-<div class="position-absolute bottom-0 end-0 m-4">
-  <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-  <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-  <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
-</div>
-
-<div id="MainModal" class="modal" data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="ModalTitle" class="modal-title"></h4>
-        <button id="ModalCloseBtn" type="button" class="btn-close"></button>
-      </div>
-      <div id="ModalContent" class="modal-body"></div>
-      <div class="modal-footer">
-        <button id="ModalBtn" type="button" class="btn btn-danger">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+  </script>
   <script>
     var Connection;
 
