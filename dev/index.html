@@ -463,8 +463,8 @@
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
       Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
     };
-    PdfBtn.onclick = () => { Present( [ "url" , FileData ] ); };
-    YouTubeBtn.onclick = () => { Present( [ "url" , VideoUrlCache ] ); };
+    PdfBtn.onclick = () => { Present( [ "urlfullres" , FileData ] ); };
+    YouTubeBtn.onclick = () => { Present( [ "urlfullres" , VideoUrlCache ] ); };
     ImageBtn.onclick = () => { Present( [ "image" , FileData ] ); };
     VideoBtn.onclick = () => { Present( [ "video" , FileData ] ); };
     StopBtn.onclick = () => { Connection.terminate(); };
