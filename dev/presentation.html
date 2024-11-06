@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Congregation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body class="overflow-hidden">
+  <div id="LoadView" class="container position-absolute top-50 start-50 translate-middle" style="width: 960px;height: 720px;">
+    <div id="LoadViewInt" class="container position-absolute top-50 start-50 translate-middle text-center">
+      <h1 class="display-2">Congregation</h1>
+      <div class="fs-3">Instant Presentations</div><br>
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  </div>
+  <div id="TextView" class="container position-absolute top-50 start-50 translate-middle" style="display: none;transform-origin: top left;transition: width 2s, height 2s, scale 2s;">
+    <div id="TextViewInt" class="container position-absolute top-50 start-50 translate-middle" style="">
+      <h1 id="Title" class="display-2 text-center"></h1>
+      <ul id="BulletList" class="list-group list-group-flush"></ul>
+    </div>
+  </div>
+  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;">
+    <iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe>
+  </div>
+  <div id="ImageView" class="container-fluid vw-100 vh-100 bg-black align-items-center" style="display: none;">
+    <img id="ImageObj" class="object-fit-contain bg-black" style="height: 100%;width: 100%;scale: 1;transition: width 2s, height 2s, scale 2s;" alt="image viewer">
+  </div>
+  <video id="VideoView" class="vw-100 vh-100 bg-black align-items-center" style="display: none;" controls autoplay></video>
+  <script>
+    var CurrentView = "LoadView";
+    var CurrentZoom = 1;
+    function SwitchView( View ) {
+      if ( View == CurrentView ) { return; }
+      console.log( "Changing view to " + View );
+      CurrentView = View;
+      CurrentZoom = 1;
+      ZoomView( CurrentZoom );
+      document.getElementById( "LoadView" ).style.display = "none";
+      document.getElementById( "WebView" ).style.display = "none";
+      document.getElementById( "TextView" ).style.display = "none";
+      document.getElementById( "ImageView" ).style.display = "none";
+      document.getElementById( "VideoView" ).style.display = "none";
+      document.getElementById( View ).style.display = "";
+    }
+
+    function ZoomView( ZoomFloat = 1 ) {
+      console.log( "Changing zoom level to " + ZoomFloat );
+      var TargetElement, TargetWidth, TargetHeight, TargetScale;
+      switch ( CurrentView ) {
+        case "LoadView":
+          TargetElement = document.getElementById( "LoadView" );
+          // Fit to viewport
+          TargetScale = Math.min( window.innerWidth / 960, window.innerHeight / 720 );
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          break;
+        case "TextView":
+          TargetElement = document.getElementById( "TextView" );
+          // Fixed base resolution for consistency
+          TargetWidth = Math.floor( 960 / ZoomFloat );
+          TargetHeight = Math.floor( 720 / ZoomFloat );
+          // Fit to viewport
+          TargetScale = Math.min( window.innerWidth / TargetWidth, window.innerHeight / TargetHeight );
+          TargetElement.style.width = TargetWidth + "px";
+          TargetElement.style.height = TargetHeight + "px";
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          break;
+        case "WebView":
+          TargetElement = document.getElementById( "WebIframe" );
+          // Fix width but maintain aspect ratio
+          TargetWidth = Math.floor( 960 / ZoomFloat );
+          TargetHeight = Math.floor( TargetWidth / window.innerWidth * window.innerHeight );
+          // Fit to viewport
+          TargetScale = window.innerWidth / TargetWidth;
+          TargetElement.style.width = TargetWidth + "px";
+          TargetElement.style.height = TargetHeight + "px";
+          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          break;
+        case "ImageView":
+          TargetElement = document.getElementById( "ImageObj" );
+          TargetElement.style.scale = ( ZoomFloat * 100) + "%";
+          break;
+      }
+    }
+
+    function HandleText( TextStr ) {
+      // Multiple bullet points are separated with double dashes
+      const TextArr = TextStr.split( "--" );
+      // First point used as title
+      document.getElementById( "Title" ).innerText = TextArr.shift();
+      document.getElementById( "BulletList" ).innerHTML = "";
+      // Make an element for each remaining bullet point
+      TextArr.forEach( ( BulletStr ) => {
+        const ListItem = document.createElement( "li" );
+        ListItem.className = "list-group-item fs-3";
+        ListItem.textContent = BulletStr;
+        document.getElementById( "BulletList" ).appendChild( ListItem );
+      });
+      SwitchView( "TextView" );
+    }
+    function HandleURL( url ) {
+      document.getElementById( "WebIframe" ).src = url;
+      SwitchView( "LoadView" );
+    }
+    function HandleImage( data ) {
+      document.getElementById( "ImageObj" ).src = data;
+      SwitchView( "ImageView" );
+    }
+    function HandleVideo( data ) {
+      document.getElementById( "VideoView" ).src = data;
+      SwitchView( "VideoView" );
+      document.getElementById( "VideoView" ).load();
+    }
+
+    var Connection;
+    function Connect( NewConnection ) {
+      console.log( "New connection received" );
+      // Do not connect if connection already exists
+      if ( Connection ) { return; }
+      Connection = NewConnection;
+      // Add connection events
+      Connection.onmessage = ( Message ) => {
+        var data = JSON.parse( Message.data );
+        switch( data[0] ) {
+          case "text":
+            HandleText( data[1] );
+            break;
+          case "url":
+            HandleURL( data[1] );
+            break;
+          case "image":
+            HandleImage( data[1] );
+            break;
+          case "video":
+            HandleVideo( data[1] );
+            break;
+          case "zoomin":
+            CurrentZoom = Math.min( CurrentZoom + 0.2 , 5 );
+            ZoomView( CurrentZoom );
+            break;
+          case "zoomout":
+            CurrentZoom = Math.max( CurrentZoom - 0.2 , 0.2 );
+            ZoomView( CurrentZoom );
+            break;
+          default:
+            console.log( "Invalid message received: " + Message.data )
+        }
+      };
+      console.log( "Sending ready message" );
+      Connection.send( "load" );
+    }
+
+    window.addEventListener( "load", () => {
+      // When loaded, handle incoming connections
+      navigator.presentation.receiver.connectionList.then( ( ConnList ) => {
+        if ( ConnList.connections[0] ) {
+          Connect( ConnList.connections[0] );
+        } else {
+          ConnList.onconnectionavailable = ( Event ) => { Connect( Event.connection ); };
+        }
+      });
+    });
+
+    document.getElementById( "WebIframe" ).addEventListener( "load", () => {
+      SwitchView( "WebView" );
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
