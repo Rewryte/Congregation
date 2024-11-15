@@ -320,7 +320,7 @@
     }
 
     // Drag and drop
-    document.getElementById( "Main" ).addEventListener( "drop", ( Event ) => {
+    document.addEventListener( "drop", ( Event ) => {
       // URL or text dropped
       const DragText = Event.dataTransfer.getData( "text/uri-list" ) || Event.dataTransfer.getData( "text/plain" );
       if ( DragText ) {
@@ -404,11 +404,10 @@
     }
 
     [ "dragenter", "dragover", "dragleave", "drop" ].forEach( EventName => {
-        document.getElementById( "Main" ).addEventListener( EventName, preventDefaults, false );
-        document.body.addEventListener( EventName, preventDefaults, false );  
+        document.addEventListener( EventName, PreventDefaults, false );
     });
 
-    function preventDefaults( e ) {
+    function PreventDefaults( e ) {
         e.preventDefault();
         e.stopPropagation();
     }
@@ -434,7 +433,6 @@
       SetVisible( "BibleBtn", ( BibleRefCache ) );
       VideoUrlCache = YoutubeUrl( InputText );
       SetVisible( "YouTubeBtn", ( VideoUrlCache ) );
-      if ( BibleRefCache ) {console.log( BibliaUrl( BibleRefCache ) );}
     };
 
     // Buttons
@@ -463,8 +461,8 @@
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
       Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
     };
-    PdfBtn.onclick = () => { Present( [ "url" , FileData ] ); };
-    YouTubeBtn.onclick = () => { Present( [ "url" , VideoUrlCache ] ); };
+    PdfBtn.onclick = () => { Present( [ "urlfullres" , FileData ] ); };
+    YouTubeBtn.onclick = () => { Present( [ "urlfullres" , VideoUrlCache ] ); };
     ImageBtn.onclick = () => { Present( [ "image" , FileData ] ); };
     VideoBtn.onclick = () => { Present( [ "video" , FileData ] ); };
     StopBtn.onclick = () => { Connection.terminate(); };
