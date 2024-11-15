@@ -320,7 +320,7 @@
     }
 
     // Drag and drop
-    document.getElementById( "Main" ).addEventListener( "drop", ( Event ) => {
+    document.addEventListener( "drop", ( Event ) => {
       // URL or text dropped
       const DragText = Event.dataTransfer.getData( "text/uri-list" ) || Event.dataTransfer.getData( "text/plain" );
       if ( DragText ) {
@@ -404,11 +404,10 @@
     }
 
     [ "dragenter", "dragover", "dragleave", "drop" ].forEach( EventName => {
-        document.getElementById( "Main" ).addEventListener( EventName, preventDefaults, false );
-        document.body.addEventListener( EventName, preventDefaults, false );  
+        document.addEventListener( EventName, PreventDefaults, false );
     });
 
-    function preventDefaults( e ) {
+    function PreventDefaults( e ) {
         e.preventDefault();
         e.stopPropagation();
     }
