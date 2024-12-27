@@ -14,11 +14,13 @@
       <h1 class="display-2">Congregation</h1>
       <p class="lead">Instant Presentations (Beta)</p>
     </div>
-    <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
+    <div id="InputRow" class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
       <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
     </div></div>
     <div class="row"><div>
       <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images, videos or PDF files from your desktop.</div>
+      <button id="PreviewCloseBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-arrow-left"></i><br>Back</button>
+      <img id="PreviewImage" class="object-fit-contain m-2" style="display: none;height: 300px;width: 300px;">
       <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Title</button>
       <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
       <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
@@ -376,6 +378,10 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", true );
           SetVisible( "VideoBtn", false );
+          SetVisible( "InputRow", false );
+          SetVisible( "PreviewCloseBtn", true );
+          SetVisible( "PreviewImage", true );
+          document.getElementById( "PreviewImage" ).src = URL.createObjectURL( File );
         };
         Reader.readAsDataURL( File );
       } else if ( File.type.startsWith( "video/" ) ) {
@@ -398,6 +404,8 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", false );
           SetVisible( "VideoBtn", true );
+          SetVisible( "InputRow", false );
+          SetVisible( "PreviewCloseBtn", true );
         };
         Reader.readAsDataURL( File );
       }
@@ -475,6 +483,13 @@
     };
     ModalCloseBtn.onclick = () => { HideModal(); };
     ModalBtn.onclick = () => { HideModal(); };
+    PreviewCloseBtn.onclick = () => {
+      document.getElementById( "MainInput" ).value = "";
+      MainInput.onkeyup();
+      SetVisible( "InputRow", true );
+      SetVisible( "PreviewCloseBtn", false );
+      SetVisible( "PreviewImage", false );
+    };
 
     // Init
     window.addEventListener( "load", () => {
