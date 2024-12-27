@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +35,7 @@
   <div class="position-absolute bottom-0 end-0 m-4">
     <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
     <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+    <button id="DarkModeBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-lightbulb"></i></button>
     <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
   </div>
   
@@ -424,6 +425,12 @@
       document.getElementById( Id ).style.display = Visible ? "" : "none";
     }
 
+    var DarkMode = ( window.matchMedia('(prefers-color-scheme: dark)').matches );
+    function SetDarkMode() {
+      DarkMode ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
+    }
+    SetDarkMode();
+
     var TextCache;
     var BibleRefCache;
     var VideoUrlCache;
@@ -480,6 +487,10 @@
     };
     ZoomOutBtn.onclick = () => {
       Present( [ "zoomout" ] );
+    };
+    DarkModeBtn.onclick = () => {
+      DarkMode = !DarkMode;
+      SetDarkMode();
     };
     ModalCloseBtn.onclick = () => { HideModal(); };
     ModalBtn.onclick = () => { HideModal(); };
