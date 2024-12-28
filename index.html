@@ -425,9 +425,14 @@
       document.getElementById( Id ).style.display = Visible ? "" : "none";
     }
 
-    var DarkMode = ( window.matchMedia('(prefers-color-scheme: dark)').matches );
     function SetDarkMode() {
-      DarkMode ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
+      var DarkMode = localStorage.getItem( "DarkMode" );
+      // Use browser preference if no previous setting
+      if ( DarkMode === null ) {
+        DarkMode = ( window.matchMedia( "(prefers-color-scheme: dark)" ).matches );
+        localStorage.setItem( "DarkMode", DarkMode );
+      }
+      ( DarkMode == "true" ) ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
     }
     SetDarkMode();
 
@@ -489,7 +494,7 @@
       Present( [ "zoomout" ] );
     };
     DarkModeBtn.onclick = () => {
-      DarkMode = !DarkMode;
+      localStorage.setItem( "DarkMode", ( localStorage.getItem( "DarkMode" ) == "false" ) );
       SetDarkMode();
     };
     ModalCloseBtn.onclick = () => { HideModal(); };
