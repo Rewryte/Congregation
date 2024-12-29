@@ -283,6 +283,7 @@
               SetVisible( "ZoomInBtn", true );
               SetVisible( "ZoomOutBtn", true );
               Busy = false;
+              Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] );
               Present( Data );
               HideModal();
             };
@@ -433,6 +434,7 @@
         localStorage.setItem( "DarkMode", DarkMode );
       }
       ( DarkMode == "true" ) ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
+      if ( Connection && Connection.state == "connected" ) { Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] ); }
     }
     SetDarkMode();
 
