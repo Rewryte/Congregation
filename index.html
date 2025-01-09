@@ -240,7 +240,7 @@
       const BookName = Object.keys( VerseMap )[ Book - 1 ];
       var RetStr = BookName + " " + Chapter + ":" + StartVerse;
       RetStr += ( EndVerse > StartVerse ) ? "-" + EndVerse : "";
-      RetStr += ( Version != "niv" ) ? " " + Version.toUpperCase() : "";
+      RetStr += " " + Version.toUpperCase();
       return RetStr;
     }
 
