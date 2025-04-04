@@ -34,11 +34,13 @@
     var CurrentView = "LoadView";
     var CurrentZoom = 1;
     function SwitchView( View ) {
-      if ( View == CurrentView ) { return; }
       console.log( "Changing view to " + View );
-      CurrentView = View;
-      CurrentZoom = 1;
-      ZoomView( CurrentZoom );
+      // Reset zoom when changing modes
+      if ( View != "LoadView" && View != CurrentView ) {
+        CurrentView = View;
+        CurrentZoom = 1;
+        ZoomView( CurrentZoom );
+      }
       document.getElementById( "LoadView" ).style.display = "none";
       document.getElementById( "WebView" ).style.display = "none";
       document.getElementById( "FullWebView" ).style.display = "none";
