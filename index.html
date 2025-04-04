@@ -28,7 +28,7 @@
       <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Title</button>
       <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
       <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
-      <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
+      <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Bible</button>
       <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
       <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
       <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
@@ -258,6 +258,16 @@
       return "https://biblia.com/bible/" + Version + "/" + BookName + "/" + Chapter + "/" + StartVerse;
     }
 
+    function BibleGatewayUrl( BibleArray ) {
+      const BibleGatewayBooks = [ "genesis", "exodus", "leviticus", "numbers", "deuteronomy", "joshua", "judges", "ruth", "1samuel", "2samuel", "1kings", "2kings", "1chronicles", "2chronicles", "ezra", "nehemiah", "esther", "job", "psalm", "proverbs", "ecclesiastes", "song", "isaiah", "jeremiah", "lamentations", "ezekiel", "daniel", "hosea", "joel", "amos", "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah", "haggai", "zechariah", "malachi", "matthew", "mark", "luke", "john", "acts", "romans", "1corinthians", "2corinthians", "galatians", "ephesians", "philippians", "colossians", "1thessalonians", "2thessalonians", "1timothy", "2timothy", "titus", "philemon", "hebrews", "james", "1peter", "2peter", "1john", "2john", "3john", "jude", "revelation" ];
+      const [ Book, Chapter, StartVerse, EndVerse, Version ] = BibleArray;
+      const BookName = BibleGatewayBooks[ Book - 1 ];
+      if ( EndVerse > StartVerse ) {
+        return "https://www.biblegateway.com/passage/?search=" + BookName + "%20" + Chapter + "%3A" + StartVerse + "-" + EndVerse + "&version=" + Version + "&interface=print";
+      }
+      return "https://www.biblegateway.com/passage/?search=" + BookName + "%20" + Chapter + "%3A" + StartVerse + "&version=" + Version + "&interface=print";
+    }
+
     function YoutubeUrl( UrlStr ) {
       const UrlRegex = /(youtube.com\/watch\?.*v=|youtu.be\/)(?<vid>[\w-]{11})(&|\?)?(?<params>\w+=.+)?/i
       const Match = UrlRegex.exec( UrlStr );
@@ -485,7 +495,7 @@
     };
     BibleBtn.onclick = () => {
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
-      Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
+      Present( [ "url" , BibleGatewayUrl( BibleRefCache ) ] );
     };
     PdfBtn.onclick = () => { Present( [ "urlfullres" , FileData ] ); };
     YouTubeBtn.onclick = () => { Present( [ "urlfullres" , VideoUrlCache ] ); };

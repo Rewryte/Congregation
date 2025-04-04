@@ -7,7 +7,7 @@ Presentation software that runs entirely from a browser with a focus on minimal 
  - Turn **text** into title slides or bullet points
  - Present a **website** from a URL (see limitations)
  - **YouTube links** are opened as fullscreen videos which autoplay
- - **Bible references** are automatically converted into Biblia pages
+ - **Bible references** are automatically converted into Bible Gateway pages
  - Supports local media such as **images, videos and PDF files**
  - Privacy - all data is stored locally
 
