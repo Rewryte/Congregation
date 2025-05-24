@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Congregation</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body class="overflow-hidden">
+<body class="overflow-hidden" style="transition: background 0.5s, color 0.5s;">
   <div id="LoadView" class="container position-absolute top-50 start-50 translate-middle" style="width: 960px;height: 720px;">
     <div id="LoadViewInt" class="container position-absolute top-50 start-50 translate-middle text-center">
       <h1 class="display-2">Congregation</h1>
@@ -34,11 +34,13 @@
     var CurrentView = "LoadView";
     var CurrentZoom = 1;
     function SwitchView( View ) {
-      if ( View == CurrentView ) { return; }
       console.log( "Changing view to " + View );
-      CurrentView = View;
-      CurrentZoom = 1;
-      ZoomView( CurrentZoom );
+      // Reset zoom when changing modes
+      if ( View != "LoadView" && View != CurrentView ) {
+        CurrentView = View;
+        CurrentZoom = 1;
+        ZoomView( CurrentZoom );
+      }
       document.getElementById( "LoadView" ).style.display = "none";
       document.getElementById( "WebView" ).style.display = "none";
       document.getElementById( "FullWebView" ).style.display = "none";
@@ -85,6 +87,10 @@
           TargetElement.style.scale = ( ZoomFloat * 100) + "%";
           break;
       }
+    }
+
+    function SetDarkMode( DarkMode ) {
+      ( DarkMode == "true" ) ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
     }
 
     function HandleText( TextStr ) {
@@ -152,6 +158,9 @@
           case "zoomout":
             CurrentZoom = Math.max( CurrentZoom - 0.2 , 0.2 );
             ZoomView( CurrentZoom );
+            break;
+          case "darkmode":
+            SetDarkMode( data[1] );
             break;
           default:
             console.log( "Invalid message received: " + Message.data )

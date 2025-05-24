@@ -1,28 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Congregation: Instant Presentations (Beta)</title>
+  <meta name="description" content="Presentation software that runs entirely from a browser with a focus on minimal preparation">
+  <meta name="keywords" content="Presentation, YouTube, Bible, PDF, Church, Open Source">
+  <link rel="author" href="https://github.com/Rewryte">
+  <link rel="canonical" href="https://rewryte.github.io/Congregation/">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
+<body style="transition: background 0.5s, color 0.5s;">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <div id="Main" class="container position-absolute top-50 start-50 translate-middle align-items-center text-center">
     <div class="row">
       <h1 class="display-2">Congregation</h1>
       <p class="lead">Instant Presentations (Beta)</p>
     </div>
-    <div class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
+    <div id="InputRow" class="row"><div class="col-md-4 align-self-middle input-group input-group-lg p-3">
       <input type="text" class="form-control" id="MainInput" placeholder="Type here to create a slide">
     </div></div>
     <div class="row"><div>
       <div id="TooltipTxt">Enter text, Bible references, YouTube links or websites. Drag and drop images, videos or PDF files from your desktop.</div>
+      <button id="PreviewCloseBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-arrow-left"></i><br>Back</button>
+      <img id="PreviewImage" class="object-fit-contain m-2" style="display: none;height: 300px;width: 300px;">
       <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Title</button>
       <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
       <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
-      <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Biblia</button>
+      <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Bible</button>
       <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
       <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
       <button id="ImageBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-image"></i><br>Image</button>
@@ -33,6 +39,7 @@
   <div class="position-absolute bottom-0 end-0 m-4">
     <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
     <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+    <button id="DarkModeBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-lightbulb"></i></button>
     <button id="AboutBtn" type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-info"></i></button>
   </div>
   
@@ -237,7 +244,7 @@
       const BookName = Object.keys( VerseMap )[ Book - 1 ];
       var RetStr = BookName + " " + Chapter + ":" + StartVerse;
       RetStr += ( EndVerse > StartVerse ) ? "-" + EndVerse : "";
-      RetStr += ( Version != "niv" ) ? " " + Version.toUpperCase() : "";
+      RetStr += " " + Version.toUpperCase();
       return RetStr;
     }
 
@@ -249,6 +256,16 @@
         return "https://biblia.com/bible/" + Version + "/" + BookName + "/" + Chapter + "/" + StartVerse + "-" + EndVerse;
       }
       return "https://biblia.com/bible/" + Version + "/" + BookName + "/" + Chapter + "/" + StartVerse;
+    }
+
+    function BibleGatewayUrl( BibleArray ) {
+      const BibleGatewayBooks = [ "genesis", "exodus", "leviticus", "numbers", "deuteronomy", "joshua", "judges", "ruth", "1samuel", "2samuel", "1kings", "2kings", "1chronicles", "2chronicles", "ezra", "nehemiah", "esther", "job", "psalm", "proverbs", "ecclesiastes", "song", "isaiah", "jeremiah", "lamentations", "ezekiel", "daniel", "hosea", "joel", "amos", "obadiah", "jonah", "micah", "nahum", "habakkuk", "zephaniah", "haggai", "zechariah", "malachi", "matthew", "mark", "luke", "john", "acts", "romans", "1corinthians", "2corinthians", "galatians", "ephesians", "philippians", "colossians", "1thessalonians", "2thessalonians", "1timothy", "2timothy", "titus", "philemon", "hebrews", "james", "1peter", "2peter", "1john", "2john", "3john", "jude", "revelation" ];
+      const [ Book, Chapter, StartVerse, EndVerse, Version ] = BibleArray;
+      const BookName = BibleGatewayBooks[ Book - 1 ];
+      if ( EndVerse > StartVerse ) {
+        return "https://www.biblegateway.com/passage/?search=" + BookName + "%20" + Chapter + "%3A" + StartVerse + "-" + EndVerse + "&version=" + Version + "&interface=print";
+      }
+      return "https://www.biblegateway.com/passage/?search=" + BookName + "%20" + Chapter + "%3A" + StartVerse + "&version=" + Version + "&interface=print";
     }
 
     function YoutubeUrl( UrlStr ) {
@@ -280,6 +297,7 @@
               SetVisible( "ZoomInBtn", true );
               SetVisible( "ZoomOutBtn", true );
               Busy = false;
+              Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] );
               Present( Data );
               HideModal();
             };
@@ -376,6 +394,10 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", true );
           SetVisible( "VideoBtn", false );
+          SetVisible( "InputRow", false );
+          SetVisible( "PreviewCloseBtn", true );
+          SetVisible( "PreviewImage", true );
+          document.getElementById( "PreviewImage" ).src = URL.createObjectURL( File );
         };
         Reader.readAsDataURL( File );
       } else if ( File.type.startsWith( "video/" ) ) {
@@ -398,6 +420,8 @@
           SetVisible( "YouTubeBtn", false );
           SetVisible( "ImageBtn", false );
           SetVisible( "VideoBtn", true );
+          SetVisible( "InputRow", false );
+          SetVisible( "PreviewCloseBtn", true );
         };
         Reader.readAsDataURL( File );
       }
@@ -415,6 +439,18 @@
     function SetVisible( Id, Visible ) {
       document.getElementById( Id ).style.display = Visible ? "" : "none";
     }
+
+    function SetDarkMode() {
+      var DarkMode = localStorage.getItem( "DarkMode" );
+      // Use browser preference if no previous setting
+      if ( DarkMode === null ) {
+        DarkMode = ( window.matchMedia( "(prefers-color-scheme: dark)" ).matches );
+        localStorage.setItem( "DarkMode", DarkMode );
+      }
+      ( DarkMode == "true" ) ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
+      if ( Connection && Connection.state == "connected" ) { Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] ); }
+    }
+    SetDarkMode();
 
     var TextCache;
     var BibleRefCache;
@@ -459,7 +495,7 @@
     };
     BibleBtn.onclick = () => {
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
-      Present( [ "url" , BibliaUrl( BibleRefCache ) ] );
+      Present( [ "url" , BibleGatewayUrl( BibleRefCache ) ] );
     };
     PdfBtn.onclick = () => { Present( [ "urlfullres" , FileData ] ); };
     YouTubeBtn.onclick = () => { Present( [ "urlfullres" , VideoUrlCache ] ); };
@@ -473,8 +509,19 @@
     ZoomOutBtn.onclick = () => {
       Present( [ "zoomout" ] );
     };
+    DarkModeBtn.onclick = () => {
+      localStorage.setItem( "DarkMode", ( localStorage.getItem( "DarkMode" ) == "false" ) );
+      SetDarkMode();
+    };
     ModalCloseBtn.onclick = () => { HideModal(); };
     ModalBtn.onclick = () => { HideModal(); };
+    PreviewCloseBtn.onclick = () => {
+      document.getElementById( "MainInput" ).value = "";
+      MainInput.onkeyup();
+      SetVisible( "InputRow", true );
+      SetVisible( "PreviewCloseBtn", false );
+      SetVisible( "PreviewImage", false );
+    };
 
     // Init
     window.addEventListener( "load", () => {
