@@ -198,18 +198,27 @@
     }
   </script>
   <script>
+    var WindowPermissionState;
     async function CheckPermissions() {
-      // Requires transient user activation
-      const PermissionStatus = await navigator.permissions.query( { name: "window-management" } );
-      if ( PermissionStatus.state === "prompt" ) {
-          try {
-            const ScreenDetails = await getScreenDetails();
-            console.log( "Screen details retrieved: " , ScreenDetails );
-          } catch ( error ) {
-            console.error( "Error when calling getScreenDetails(): ", error);
-          }
-      } else {
-        console.log( "window-management permission state: " + PermissionStatus.state );
+      try {
+        const PermissionStatus = await navigator.permissions.query( { name: "window-management" } );
+        console.log( "Window-management permission state: " + PermissionStatus.state );
+        WindowPermissionState = PermissionStatus.state;
+      } catch ( error ) {
+        alert( "Congregation is not supported on this browser" );
+      }
+    }
+
+    async function GetWindowPermissions() {
+      if ( WindowPermissionState == "granted" ) { return; }
+      try {
+        // Calls getScreenDetails() to trigger Window Management prompt
+        // Requires transient user activation
+        // Calling this on the main window will negate the need of an additional user interaction on the presentation window
+        const ScreenDetails = await getScreenDetails();
+        console.log( "Screen details retrieved: " , ScreenDetails );
+      } catch ( error ) {
+        console.error( "Error when calling getScreenDetails()", error);
       }
     }
 
@@ -456,7 +465,7 @@
     var VideoUrlCache;
     // Input box changed
     MainInput.onkeyup = () => {
-      CheckPermissions();
+      GetWindowPermissions();
 
       var InputText = document.getElementById( "MainInput" ).value;
       SetVisible( "TooltipTxt", ( !InputText ) );
@@ -525,7 +534,9 @@
     };
 
     // Init
-    // window.addEventListener( "load", () => {});
+    window.addEventListener( "load", () => {
+      CheckPermissions();
+    });
 
     // Handle URL Parameters
     const UrlParams = new URLSearchParams( window.location.search );
