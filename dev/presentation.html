@@ -33,8 +33,11 @@
     </div>
     <video id="VideoView" class="vw-100 vh-100 bg-black align-items-center" style="display: none;" controls autoplay></video>
   </div>
-  <div id="DisplayList">
-    <button id="DisplayBtnTemplate" type="button" class="btn btn-secondary btn-lg" style="display: none;"></button>
+  <div class="container">
+    <h3>Select presentation display from the list below</h3>
+    <div id="DisplayList" class="list-group">
+      <button id="DisplayBtnTemplate" type="button" class="list-group-item list-group-item-action list-group-item-primary" style="display: none;"></button>
+    </div>
   </div>
   <script>
     var CurrentView = "LoadView";
