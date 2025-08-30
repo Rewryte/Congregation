@@ -28,7 +28,6 @@
       <button id="TextBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-font"></i><br>Title</button>
       <button id="ListBtn" type="button" class="btn btn-secondary btn-lg" style="display: none;"><i class="fa-solid fa-list-ul"></i><br>List</button>
       <button id="WebBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Web</button>
-      <button id="WebBtn2" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-globe"></i><br>Direct</button>
       <button id="BibleBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-book-bible"></i><br>Bible</button>
       <button id="PdfBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-solid fa-file-pdf"></i><br>PDF</button>
       <button id="YouTubeBtn" type="button" class="btn btn-primary btn-lg" style="display: none;"><i class="fa-brands fa-youtube"></i><br>YouTube</button>
@@ -324,40 +323,6 @@
       }
     }
 
-    function PresentWeb( Url ) {
-      RequestWeb = new PresentationRequest( Url );
-      if ( Busy ) { return; }
-      // Start presentation if not started
-      if ( !Connection || Connection.state != "connected" ) {
-        console.log( "Starting presentation" );
-        Busy = true;
-        ShowModal( "Monitor Selection", "Ensure that your projector / screen is connected and set to Extend mode", true );
-        RequestWeb
-          .start()
-          .then( ( NewConnection ) => {
-            Connection = NewConnection;
-            // Connection state events
-            Connection.onterminate = () => {
-              console.log( "Terminate event called" );
-              SetVisible( "StopBtn", false );
-              SetVisible( "ZoomInBtn", false );
-              SetVisible( "ZoomOutBtn", false );
-            };
-          } )
-          .catch( ( Error ) => {
-            console.log( "Connection attempt aborted" );
-            SetVisible( "StopBtn", false );
-            SetVisible( "ZoomInBtn", false );
-            SetVisible( "ZoomOutBtn", false );
-            Busy = false;
-            HideModal();
-          } );
-        SetVisible( "StopBtn", true );
-        Busy = false;
-        HideModal();
-      }
-    }
-
     // Modal
 
     const MainModal = new bootstrap.Modal( document.getElementById( "MainModal" ) );
@@ -402,7 +367,6 @@
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
           SetVisible( "WebBtn", false );
-          SetVisible( "WebBtn2", false );
           SetVisible( "BibleBtn", false );
           SetVisible( "PdfBtn", true );
           SetVisible( "YouTubeBtn", false );
@@ -425,7 +389,6 @@
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
           SetVisible( "WebBtn", false );
-          SetVisible( "WebBtn2", false );
           SetVisible( "BibleBtn", false );
           SetVisible( "PdfBtn", false );
           SetVisible( "YouTubeBtn", false );
@@ -452,7 +415,6 @@
           SetVisible( "TextBtn", false );
           SetVisible( "ListBtn", false );
           SetVisible( "WebBtn", false );
-          SetVisible( "WebBtn2", false );
           SetVisible( "BibleBtn", false );
           SetVisible( "PdfBtn", false );
           SetVisible( "YouTubeBtn", false );
@@ -500,7 +462,6 @@
       SetVisible( "TextBtn", ( InputText && !IsList( InputText ) ) );
       SetVisible( "ListBtn", ( InputText && ( TextCache || IsList( InputText ) ) ) );
       SetVisible( "WebBtn", IsValidUrl( InputText ) );
-      SetVisible( "WebBtn2", IsValidUrl( InputText ) );
       SetVisible( "PdfBtn", false );
       SetVisible( "ImageBtn", false );
       SetVisible( "VideoBtn", false );
@@ -531,11 +492,6 @@
       const FixedUrl = FixUrl( document.getElementById( "MainInput" ).value );
       document.getElementById( "MainInput" ).value = FixedUrl;
       Present( [ "url" , FixedUrl ] );
-    };
-    WebBtn2.onclick = () => {
-      const FixedUrl = FixUrl( document.getElementById( "MainInput" ).value );
-      document.getElementById( "MainInput" ).value = FixedUrl;
-      PresentWeb( FixedUrl );
     };
     BibleBtn.onclick = () => {
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
