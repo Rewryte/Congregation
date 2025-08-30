@@ -434,7 +434,7 @@
         localStorage.setItem( "DarkMode", DarkMode );
       }
       ( DarkMode == "true" ) ? document.documentElement.setAttribute( "data-bs-theme", "dark" ) : document.documentElement.setAttribute( "data-bs-theme", "light" );
-      if ( Connection && Connection.state == "connected" ) { Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] ); }
+      if ( PresentationWindow && !PresentationWindow.closed ) { Present( [ "darkmode", localStorage.getItem( "DarkMode" ) ] ); }
     }
     SetDarkMode();
 
