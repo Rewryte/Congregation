@@ -198,6 +198,21 @@
     }
   </script>
   <script>
+    async function CheckPermissions() {
+      // Requires transient user activation
+      const PermissionStatus = await navigator.permissions.query( { name: "window-management" } );
+      if ( PermissionStatus.state === "prompt" ) {
+          try {
+            const ScreenDetails = await getScreenDetails();
+            console.log( "Screen details retrieved: " , ScreenDetails );
+          } catch ( error ) {
+            console.error( "Error when calling getScreenDetails(): ", error);
+          }
+      } else {
+        console.log( "window-management permission state: " + PermissionStatus.state );
+      }
+    }
+
     function IsList( TextStr ) {
       return /--[^-]/.test( TextStr );
     }
@@ -440,7 +455,9 @@
     var BibleRefCache;
     var VideoUrlCache;
     // Input box changed
-    MainInput.onkeyup = () => { 
+    MainInput.onkeyup = () => {
+      CheckPermissions();
+
       var InputText = document.getElementById( "MainInput" ).value;
       SetVisible( "TooltipTxt", ( !InputText ) );
       SetVisible( "TextBtn", ( InputText && !IsList( InputText ) ) );
