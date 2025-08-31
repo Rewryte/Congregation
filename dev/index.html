@@ -362,76 +362,49 @@
     function HandleFile( File ) {
       if ( File.type == "application/pdf" ) {
         // PDF Files
-        const Reader = new FileReader();
-        Reader.onloadend = () => {
-          if ( !Reader.result ) {
-            // Abort when overly large files can cause FileReader to return an empty string
-            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
-            return;
-          }
-          FileData = Reader.result;
-          document.getElementById( "MainInput" ).value = File.name;
-          SetVisible( "TooltipTxt", false );
-          SetVisible( "TextBtn", false );
-          SetVisible( "ListBtn", false );
-          SetVisible( "WebBtn", false );
-          SetVisible( "BibleBtn", false );
-          SetVisible( "PdfBtn", true );
-          SetVisible( "YouTubeBtn", false );
-          SetVisible( "ImageBtn", false );
-          SetVisible( "VideoBtn", false );
-        };
-        Reader.readAsDataURL( File );
+        FileData = URL.createObjectURL( File );
+        document.getElementById( "MainInput" ).value = File.name;
+        SetVisible( "TooltipTxt", false );
+        SetVisible( "TextBtn", false );
+        SetVisible( "ListBtn", false );
+        SetVisible( "WebBtn", false );
+        SetVisible( "BibleBtn", false );
+        SetVisible( "PdfBtn", true );
+        SetVisible( "YouTubeBtn", false );
+        SetVisible( "ImageBtn", false );
+        SetVisible( "VideoBtn", false );
       } else if ( File.type.startsWith( "image/" ) ) {
         // Image Files
-        const Reader = new FileReader();
-        Reader.onloadend = () => {
-          if ( !Reader.result ) {
-            // Abort when overly large files can cause FileReader to return an empty string
-            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
-            return;
-          }
-          FileData = Reader.result;
-          document.getElementById( "MainInput" ).value = File.name;
-          SetVisible( "TooltipTxt", false );
-          SetVisible( "TextBtn", false );
-          SetVisible( "ListBtn", false );
-          SetVisible( "WebBtn", false );
-          SetVisible( "BibleBtn", false );
-          SetVisible( "PdfBtn", false );
-          SetVisible( "YouTubeBtn", false );
-          SetVisible( "ImageBtn", true );
-          SetVisible( "VideoBtn", false );
-          SetVisible( "InputRow", false );
-          SetVisible( "PreviewCloseBtn", true );
-          SetVisible( "PreviewImage", true );
-          document.getElementById( "PreviewImage" ).src = URL.createObjectURL( File );
-        };
-        Reader.readAsDataURL( File );
+        FileData = URL.createObjectURL( File );
+        document.getElementById( "MainInput" ).value = File.name;
+        document.getElementById( "PreviewImage" ).src = FileData;
+        SetVisible( "TooltipTxt", false );
+        SetVisible( "TextBtn", false );
+        SetVisible( "ListBtn", false );
+        SetVisible( "WebBtn", false );
+        SetVisible( "BibleBtn", false );
+        SetVisible( "PdfBtn", false );
+        SetVisible( "YouTubeBtn", false );
+        SetVisible( "ImageBtn", true );
+        SetVisible( "VideoBtn", false );
+        SetVisible( "InputRow", false );
+        SetVisible( "PreviewCloseBtn", true );
+        SetVisible( "PreviewImage", true );
       } else if ( File.type.startsWith( "video/" ) ) {
         // Video Files
-        const Reader = new FileReader();
-        Reader.onloadend = () => {
-          if ( !Reader.result ) {
-            // Abort when overly large files can cause FileReader to return an empty string
-            ShowModal( "File too large", File.name + " (" + Math.floor( File.size / 1024 / 1024 ) + "MB) is too large for your browser to read." )
-            return;
-          }
-          FileData = Reader.result;
-          document.getElementById( "MainInput" ).value = File.name;
-          SetVisible( "TooltipTxt", false );
-          SetVisible( "TextBtn", false );
-          SetVisible( "ListBtn", false );
-          SetVisible( "WebBtn", false );
-          SetVisible( "BibleBtn", false );
-          SetVisible( "PdfBtn", false );
-          SetVisible( "YouTubeBtn", false );
-          SetVisible( "ImageBtn", false );
-          SetVisible( "VideoBtn", true );
-          SetVisible( "InputRow", false );
-          SetVisible( "PreviewCloseBtn", true );
-        };
-        Reader.readAsDataURL( File );
+        FileData = URL.createObjectURL( File );
+        document.getElementById( "MainInput" ).value = File.name;
+        SetVisible( "TooltipTxt", false );
+        SetVisible( "TextBtn", false );
+        SetVisible( "ListBtn", false );
+        SetVisible( "WebBtn", false );
+        SetVisible( "BibleBtn", false );
+        SetVisible( "PdfBtn", false );
+        SetVisible( "YouTubeBtn", false );
+        SetVisible( "ImageBtn", false );
+        SetVisible( "VideoBtn", true );
+        SetVisible( "InputRow", false );
+        SetVisible( "PreviewCloseBtn", true );
       }
     }
 
