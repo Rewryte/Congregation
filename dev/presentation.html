@@ -76,9 +76,9 @@
           TargetElement = document.getElementById( "WebView" );
           // Fix width but maintain aspect ratio
           TargetWidth = Math.floor( 960 / ZoomFloat );
-          TargetHeight = Math.floor( TargetWidth / window.innerWidth * window.innerHeight );
+          TargetHeight = Math.floor( TargetWidth / TargetElement.parentNode.Width * TargetElement.parentNode.Height );
           // Fit to viewport
-          TargetScale = window.innerWidth / TargetWidth;
+          TargetScale = TargetElement.parentNode.Width / TargetWidth;
           TargetElement.style.width = TargetWidth + "px";
           TargetElement.style.height = TargetHeight + "px";
           TargetElement.style.scale = ( TargetScale * 100 ) + "%";
