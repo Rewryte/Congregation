@@ -62,14 +62,7 @@
           break;
         case "TextView":
           TargetElement = document.getElementById( "TextView" );
-          // Fixed base resolution for consistency
-          TargetWidth = Math.floor( 960 / ZoomFloat );
-          TargetHeight = Math.floor( 720 / ZoomFloat );
-          // Fit to viewport
-          TargetScale = Math.min( window.innerWidth / TargetWidth, window.innerHeight / TargetHeight );
-          TargetElement.style.width = TargetWidth + "px";
-          TargetElement.style.height = TargetHeight + "px";
-          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          TargetElement.style.scale = ( ZoomFloat * 100 ) + "%";
           break;
         case "WebView":
           TargetElement = document.getElementById( "WebView" );
