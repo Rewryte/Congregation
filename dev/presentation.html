@@ -181,6 +181,11 @@
       PopulateDisplays();
     });
 
+    document.addEventListener( "fullscreenchange", () => {
+      // Close window when presentation exits fullscreen mode
+      if ( !document.fullscreenElement ) { close(); }
+    });
+
     document.getElementById( "WebView" ).addEventListener( "load", () => {
       SwitchView( "WebView" );
     });
