@@ -17,8 +17,7 @@ Presentation software that runs entirely from a browser with a focus on minimal 
  2. Select the type of presentation desired from the options that appear. (To create a bullet list, create a title slide first.)
  3. Select your presentation monitor / projector.
 
-## Limitations
+## Requirements
 
- - Browser must support the Presentation API (https://developer.mozilla.org/en-US/docs/Web/API/Presentation_API)
- - Web pages presented must allow loading in i-frames
- - Local media file size should not exceed browser memory limit
+ - Desktop Chromium-based browser (Google Chrome, Microsoft Edge, Brave Browser, Opera Browser, etc.)
+ - Webpages to be presented must allow loading in i-frames
