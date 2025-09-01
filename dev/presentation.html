@@ -180,6 +180,17 @@
         NewMenuItem.style.display = "";
         document.getElementById( "DisplayMenu" ).appendChild( NewMenuItem );
       });
+      // Auto-select if previous screen not found and only two screens
+      if ( !SelectedScreen && ScreenDetails.screens.length == 2 ) {
+        ScreenDetails.screens.forEach( ( Screen ) => {
+          if ( !Screen.isPrimary ) {
+            SelectedScreen = Screen;
+            const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
+            document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
+            if ( Screen.label != "" && PrevSelectedScreen != Screen.label ) { localStorage.setItem( "SelectedScreen", Screen.label ); }
+          }
+        });
+      }
     }
 
     StartBtn.onclick = () => {
