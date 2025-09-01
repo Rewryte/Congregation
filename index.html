@@ -39,7 +39,7 @@
   <div class="dropdown position-absolute top-0 start-0 m-3">
     <button id="HistoryBtn" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clock-rotate-left"></i></button>
     <ul id="HistoryMenu" class="dropdown-menu">
-      <li id="HistoryTemplate" style="display: none;"><a class="dropdown-item">Action</a></li>
+      <li id="ClearHistoryItem"><a class="dropdown-item">Clear history</a></li>
     </ul>
   </div>
   <div class="position-absolute bottom-0 end-0 m-4">
@@ -458,18 +458,26 @@
     HistoryBtn.onclick = () => {
       const HistoryMenu = document.getElementById( "HistoryMenu" );
       // Clear all entries from HistoryMenu except the template entry
-      document.querySelectorAll('#HistoryMenu li:not(#HistoryTemplate)').forEach(item => item.remove());
+      document.querySelectorAll('#HistoryMenu li:not(#ClearHistoryItem)').forEach(item => item.remove());
       while ( HistoryMenu.children.length > 1 ) { HistoryMenu.removeChild( HistoryMenu.lastChild ); }
       HistoryArr.forEach( ( HistoryEntry ) => {
         const Type = HistoryEntry[ 0 ];
         const Input = HistoryEntry[ 1 ];
-        const NewMenuItem = document.getElementById( "HistoryTemplate" ).cloneNode( true );
+        const NewMenuItem = document.getElementById( "ClearHistoryItem" ).cloneNode( true );
         NewMenuItem.removeAttribute("id");
         NewMenuItem.querySelector( "a.dropdown-item" ).textContent = Input;
         NewMenuItem.onclick = () => { LoadHistory( Type, Input ) };
         NewMenuItem.style.display = "";
         document.getElementById( "HistoryMenu" ).appendChild( NewMenuItem );
       });
+      // Move the clear history menu item to the bottom of the list
+      HistoryMenu.appendChild( document.getElementById( "ClearHistoryItem" ) );
+    }
+
+    ClearHistoryItem.onclick = () => {
+        console.log( "Clearing history" );
+        HistoryArr = [];
+        localStorage.setItem( "HistoryArr", "" );
     }
 
     var TextCache;
