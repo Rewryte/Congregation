@@ -36,6 +36,12 @@
       <button id="StopBtn" type="button" class="btn btn-danger btn-lg" style="display: none;"><i class="fa-solid fa-circle-stop"></i><br>Stop</button>
     </div></div>
   </div>
+  <div class="dropdown position-absolute top-0 start-0 m-3">
+    <button id="HistoryBtn" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clock-rotate-left"></i></button>
+    <ul id="HistoryMenu" class="dropdown-menu">
+      <li id="HistoryTemplate" style="display: none;"><a class="dropdown-item">Action</a></li>
+    </ul>
+  </div>
   <div class="position-absolute bottom-0 end-0 m-4">
     <button id="ZoomInBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
     <button id="ZoomOutBtn" type="button" class="btn btn-outline-secondary" style="display: none;"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
@@ -433,6 +439,38 @@
     }
     SetDarkMode();
 
+    var HistoryArr = [];
+    const HistoryMax = 10;
+    function SaveHistory( Type, Input ) {
+      var NewHistory = [ Type, Input ];
+      console.log( "Saving history", NewHistory );
+      HistoryArr.unshift( NewHistory );
+      if ( HistoryArr.length > HistoryMax ) { HistoryArr.length = HistoryMax; }
+      localStorage.setItem( "HistoryArr", JSON.stringify( HistoryArr ) );
+    }
+
+    function LoadHistory( Type, Input ) {
+      console.log( "Loading history", [ Type, Input ] );
+      document.getElementById( "MainInput" ).value = Input;
+      MainInput.onkeyup();
+    }
+
+    HistoryBtn.onclick = () => {
+      const HistoryMenu = document.getElementById( "HistoryMenu" );
+      // Clear all entries from HistoryMenu except the template entry
+      document.querySelectorAll('#HistoryMenu li:not(#HistoryTemplate)').forEach(item => item.remove());
+      while ( HistoryMenu.children.length > 1 ) { HistoryMenu.removeChild( HistoryMenu.lastChild ); }
+      HistoryArr.forEach( ( HistoryEntry ) => {
+        const Type = HistoryEntry[ 0 ];
+        const Input = HistoryEntry[ 1 ];
+        const NewMenuItem = document.getElementById( "HistoryTemplate" ).cloneNode( true );
+        NewMenuItem.querySelector( "a.dropdown-item" ).textContent = Input;
+        NewMenuItem.onclick = () => { LoadHistory( Type, Input ) };
+        NewMenuItem.style.display = "";
+        document.getElementById( "HistoryMenu" ).appendChild( NewMenuItem );
+      });
+    }
+
     var TextCache;
     var BibleRefCache;
     var VideoUrlCache;
@@ -460,6 +498,7 @@
       document.getElementById( "MainInput" ).value = "";
       SetVisible( "TextBtn", false );
       SetVisible( "ListBtn", false );
+      SaveHistory( "text", TextCache );
       Present( [ "text" , TextCache ] );
     };
     ListBtn.onclick = () => {
@@ -469,19 +508,25 @@
       document.getElementById( "MainInput" ).value = "";
       SetVisible( "TextBtn", false );
       SetVisible( "ListBtn", false );
+      SaveHistory( "text", TextCache );
       Present( [ "text" , TextCache ] );
     };
     WebBtn.onclick = () => {
       const FixedUrl = FixUrl( document.getElementById( "MainInput" ).value );
       document.getElementById( "MainInput" ).value = FixedUrl;
+      SaveHistory( "url", FixedUrl );
       Present( [ "url" , FixedUrl ] );
     };
     BibleBtn.onclick = () => {
       document.getElementById( "MainInput" ).value = BibleRefStr( BibleRefCache );
+      SaveHistory( "bible", BibleRefStr( BibleRefCache ) );
       Present( [ "url" , BibleGatewayUrl( BibleRefCache ) ] );
     };
     PdfBtn.onclick = () => { Present( [ "urlfullres" , FileData ] ); };
-    YouTubeBtn.onclick = () => { Present( [ "urlfullres" , VideoUrlCache ] ); };
+    YouTubeBtn.onclick = () => {
+      SaveHistory( "youtube", document.getElementById( "MainInput" ).value );
+      Present( [ "urlfullres" , VideoUrlCache ] );
+    };
     ImageBtn.onclick = () => { Present( [ "image" , FileData ] ); };
     VideoBtn.onclick = () => { Present( [ "video" , FileData ] ); };
     StopBtn.onclick = () => { PresentationWindow.close(); };
@@ -508,6 +553,9 @@
 
     // Init
     window.addEventListener( "load", () => {
+      const StoredHistory = localStorage.getItem( "HistoryArr" );
+      if ( StoredHistory ) { HistoryArr = JSON.parse( StoredHistory ); }
+
       CheckPermissions();
     });
 
