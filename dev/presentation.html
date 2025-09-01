@@ -164,6 +164,7 @@
 
     var SelectedScreen;
     async function PopulateDisplays() {
+      const PrevSelectedScreen = localStorage.getItem( "SelectedScreen" );
       const ScreenDetails = await window.getScreenDetails();
       ScreenDetails.screens.forEach( ( Screen, Index ) => {
         const NewMenuItem = document.getElementById( "DisplayMenuTemplate" ).cloneNode( true );
@@ -172,7 +173,10 @@
         NewMenuItem.onclick = () => {
           SelectedScreen = Screen;
           document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
+          if ( Screen.label != "" && PrevSelectedScreen != Screen.label ) { localStorage.setItem( "SelectedScreen", Screen.label ); }
         };
+        // Use previous selected screen if present
+        if ( PrevSelectedScreen != "" && PrevSelectedScreen == Screen.label ) { NewMenuItem.onclick(); }
         NewMenuItem.style.display = "";
         document.getElementById( "DisplayMenu" ).appendChild( NewMenuItem );
       });
