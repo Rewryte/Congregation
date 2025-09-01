@@ -39,7 +39,7 @@
   <div class="dropdown position-absolute top-0 start-0 m-3">
     <button id="HistoryBtn" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-clock-rotate-left"></i></button>
     <ul id="HistoryMenu" class="dropdown-menu">
-      <li id="ClearHistoryItem"><a class="dropdown-item">Clear history</a></li>
+      <li id="ClearHistoryItem"><a class="dropdown-item"><i class="fa-solid fa-broom me-2"></i>Clear history</a></li>
     </ul>
   </div>
   <div class="position-absolute bottom-0 end-0 m-4">
@@ -469,7 +469,24 @@
         const Input = HistoryEntry[ 1 ];
         const NewMenuItem = document.getElementById( "ClearHistoryItem" ).cloneNode( true );
         NewMenuItem.removeAttribute("id");
-        NewMenuItem.querySelector( "a.dropdown-item" ).textContent = Input;
+        switch ( Type ) {
+          case "text":
+            NewMenuItem.querySelector( "i" ).className = "fa-solid fa-font me-2";
+            break;
+          case "url":
+            NewMenuItem.querySelector( "i" ).className = "fa-solid fa-globe me-2";
+            break;
+          case "bible":
+            NewMenuItem.querySelector( "i" ).className = "fa-solid fa-book-bible me-2";
+            break;
+          case "youtube":
+            NewMenuItem.querySelector( "i" ).className = "fa-brands fa-youtube me-2";
+            break;
+        }
+        NewMenuItem.querySelector( "a.dropdown-item" ).childNodes.forEach( node => {
+          if ( node.nodeType == Node.TEXT_NODE ) { node.textContent = Input; }
+        });
+        //NewMenuItem.querySelector( "a.dropdown-item" ).textContent = Input;
         NewMenuItem.onclick = () => { LoadHistory( Type, Input ) };
         NewMenuItem.style.display = "";
         document.getElementById( "HistoryMenu" ).appendChild( NewMenuItem );
