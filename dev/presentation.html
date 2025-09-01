@@ -18,7 +18,7 @@
           <h1 id="Title" class="display-2 text-center"></h1>
           <ul id="BulletList" class="list-group list-group-flush"></ul>
       </div>
-      <iframe id="WebView" class="overflow-hidden" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;display: none;"></iframe>
+      <iframe id="WebView" class="overflow-hidden" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;display: none;"></iframe>
       <iframe id="FullWebView" class="overflow-hidden" style="height: 100%;width: 100%;display: none;"></iframe>
       <img id="ImageView" class="object-fit-contain" style="height: 100%;width: 100%;display: none;scale: 1;transition: width 2s, height 2s, scale 2s;" alt="image viewer">
       <video id="VideoView" class="" style="height: 100%;width: 100%;display: none;" controls autoplay></video>
@@ -68,12 +68,17 @@
           TargetElement = document.getElementById( "WebView" );
           // Fix width but maintain aspect ratio
           TargetWidth = Math.floor( 960 / ZoomFloat );
-          TargetHeight = Math.floor( TargetWidth / TargetElement.parentNode.Width * TargetElement.parentNode.Height );
+          TargetHeight = Math.floor( TargetWidth / TargetElement.parentNode.offsetWidth * TargetElement.parentNode.offsetHeight );
           // Fit to viewport
-          TargetScale = TargetElement.parentNode.Width / TargetWidth;
+          TargetScale = TargetElement.parentNode.offsetWidth / TargetWidth;
           TargetElement.style.width = TargetWidth + "px";
           TargetElement.style.height = TargetHeight + "px";
           TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          if ( document.fullscreenElement ) {
+            // Animate zoom in fullscreen but skip the first transition
+            TargetElement.offsetWidth;
+            TargetElement.style.transition = "width 2s, height 2s, scale 2s";
+          }
           break;
         case "ImageView":
           TargetElement = document.getElementById( "ImageView" );
@@ -174,8 +179,13 @@
     });
 
     document.addEventListener( "fullscreenchange", () => {
-      // Close window when presentation exits fullscreen mode
-      if ( !document.fullscreenElement ) { close(); }
+      if ( document.fullscreenElement ) {
+        // Refit to screen when entering fullscreen
+        ZoomView( CurrentZoom );
+      } else {
+        // Close preview window when exiting fullscreen
+        close();
+      }
     });
 
     document.getElementById( "WebView" ).addEventListener( "load", () => {
