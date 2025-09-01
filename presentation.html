@@ -176,6 +176,7 @@
       const ScreenDetails = await window.getScreenDetails();
       ScreenDetails.screens.forEach( ( Screen, Index ) => {
         const NewMenuItem = document.getElementById( "DisplayMenuTemplate" ).cloneNode( true );
+        NewMenuItem.removeAttribute("id");
         const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
         NewMenuItem.querySelector( "a.dropdown-item" ).textContent = ( Screen.isPrimary ) ? DisplayName + " (Main)" : DisplayName;
         NewMenuItem.onclick = () => {

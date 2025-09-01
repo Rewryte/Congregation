@@ -464,6 +464,7 @@
         const Type = HistoryEntry[ 0 ];
         const Input = HistoryEntry[ 1 ];
         const NewMenuItem = document.getElementById( "HistoryTemplate" ).cloneNode( true );
+        NewMenuItem.removeAttribute("id");
         NewMenuItem.querySelector( "a.dropdown-item" ).textContent = Input;
         NewMenuItem.onclick = () => { LoadHistory( Type, Input ) };
         NewMenuItem.style.display = "";
