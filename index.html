@@ -444,6 +444,10 @@
     function SaveHistory( Type, Input ) {
       var NewHistory = [ Type, Input ];
       console.log( "Saving history", NewHistory );
+      // Remove existing history entry already exists
+      const Index = HistoryArr.findIndex( Entry => Entry[1] == Input );
+      if ( Index != -1 ) { HistoryArr.splice( Index, 1 ); }
+      // Add new history entry
       HistoryArr.unshift( NewHistory );
       if ( HistoryArr.length > HistoryMax ) { HistoryArr.length = HistoryMax; }
       localStorage.setItem( "HistoryArr", JSON.stringify( HistoryArr ) );
