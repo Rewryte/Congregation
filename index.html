@@ -463,7 +463,6 @@
       const HistoryMenu = document.getElementById( "HistoryMenu" );
       // Clear all entries from HistoryMenu except the template entry
       document.querySelectorAll('#HistoryMenu li:not(#ClearHistoryItem)').forEach(item => item.remove());
-      while ( HistoryMenu.children.length > 1 ) { HistoryMenu.removeChild( HistoryMenu.lastChild ); }
       HistoryArr.forEach( ( HistoryEntry ) => {
         const Type = HistoryEntry[ 0 ];
         const Input = HistoryEntry[ 1 ];
