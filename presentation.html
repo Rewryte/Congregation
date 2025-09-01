@@ -6,30 +6,40 @@
   <title>Congregation</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body class="overflow-hidden" style="transition: background 0.5s, color 0.5s;">
-  <div id="LoadView" class="container position-absolute top-50 start-50 translate-middle" style="width: 960px;height: 720px;">
-    <div id="LoadViewInt" class="container position-absolute top-50 start-50 translate-middle text-center">
-      <h1 class="display-2">Congregation</h1>
-      <div class="fs-3">Instant Presentations</div><br>
-      <div class="spinner-border text-primary" role="status"></div>
+<body style="transition: background 0.5s, color 0.5s;">
+  <div id="PresentationPreview" class="position-absolute top-50 start-50 translate-middle border border-2 overflow-hidden" style="width: 480px;height: 360px;">
+    <div id="PresentationElement" class="bg-black overflow-hidden" style="width: 100%;height: 100%">
+      <div id="LoadView" class="position-relative top-50 start-50 translate-middle text-center" style="">
+          <h1 class="display-2">Congregation</h1>
+          <div class="fs-3">Instant Presentations</div><br>
+          <div class="spinner-border text-primary" role="status"></div>
+      </div>
+      <div id="TextView" class="position-relative top-50 start-50 translate-middle" style="display: none;transform-origin: top left;transition: width 2s, height 2s, scale 2s;">
+          <h1 id="Title" class="display-2 text-center"></h1>
+          <ul id="BulletList" class="list-group list-group-flush"></ul>
+      </div>
+      <iframe id="WebView" class="overflow-hidden" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;display: none;"></iframe>
+      <iframe id="FullWebView" class="overflow-hidden" style="height: 100%;width: 100%;display: none;"></iframe>
+      <img id="ImageView" class="object-fit-contain" style="height: 100%;width: 100%;display: none;scale: 1;transition: width 2s, height 2s, scale 2s;" alt="image viewer">
+      <video id="VideoView" class="" style="height: 100%;width: 100%;display: none;" controls autoplay></video>
     </div>
   </div>
-  <div id="TextView" class="container position-absolute top-50 start-50 translate-middle" style="display: none;transform-origin: top left;transition: width 2s, height 2s, scale 2s;">
-    <div id="TextViewInt" class="container position-absolute top-50 start-50 translate-middle" style="">
-      <h1 id="Title" class="display-2 text-center"></h1>
-      <ul id="BulletList" class="list-group list-group-flush"></ul>
+  <div class="position-fixed bottom-0 start-0 w-100 p-4 text-center" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="row">
+      <div class="col text-start">
+        <h3 class="d-inline align-middle me-2">Display:</h3>
+        <div class="dropdown d-inline">
+          <button id="DisplayDropdown" class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+          <ul id="DisplayMenu" class="dropdown-menu">
+            <li id="DisplayMenuTemplate" style="display: none;"><a class="dropdown-item">Label</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col text-end">
+        <button id="StartBtn" type="button" class="btn btn-primary btn-lg">Start</button>
+      </div>
     </div>
   </div>
-  <div id="WebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;">
-    <iframe id="WebIframe" style="height: 100%;width: 100%;scale: 1;transform-origin: top left;transition: width 2s, height 2s, scale 2s;"></iframe>
-  </div>
-  <div id="FullWebView" class="container-fluid vw-100 vh-100 bg-black overflow-hidden" style="display: none;">
-    <iframe id="FullWebIframe" style="height: 100%;width: 100%;"></iframe>
-  </div>
-  <div id="ImageView" class="container-fluid vw-100 vh-100 bg-black align-items-center" style="display: none;">
-    <img id="ImageObj" class="object-fit-contain bg-black" style="height: 100%;width: 100%;scale: 1;transition: width 2s, height 2s, scale 2s;" alt="image viewer">
-  </div>
-  <video id="VideoView" class="vw-100 vh-100 bg-black align-items-center" style="display: none;" controls autoplay></video>
   <script>
     var CurrentView = "LoadView";
     var CurrentZoom = 1;
@@ -62,29 +72,27 @@
           break;
         case "TextView":
           TargetElement = document.getElementById( "TextView" );
-          // Fixed base resolution for consistency
-          TargetWidth = Math.floor( 960 / ZoomFloat );
-          TargetHeight = Math.floor( 720 / ZoomFloat );
-          // Fit to viewport
-          TargetScale = Math.min( window.innerWidth / TargetWidth, window.innerHeight / TargetHeight );
-          TargetElement.style.width = TargetWidth + "px";
-          TargetElement.style.height = TargetHeight + "px";
-          TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          TargetElement.style.scale = ( ZoomFloat * 100 ) + "%";
           break;
         case "WebView":
-          TargetElement = document.getElementById( "WebIframe" );
+          TargetElement = document.getElementById( "WebView" );
           // Fix width but maintain aspect ratio
           TargetWidth = Math.floor( 960 / ZoomFloat );
-          TargetHeight = Math.floor( TargetWidth / window.innerWidth * window.innerHeight );
+          TargetHeight = Math.floor( TargetWidth / TargetElement.parentNode.offsetWidth * TargetElement.parentNode.offsetHeight );
           // Fit to viewport
-          TargetScale = window.innerWidth / TargetWidth;
+          TargetScale = TargetElement.parentNode.offsetWidth / TargetWidth;
           TargetElement.style.width = TargetWidth + "px";
           TargetElement.style.height = TargetHeight + "px";
           TargetElement.style.scale = ( TargetScale * 100 ) + "%";
+          if ( document.fullscreenElement ) {
+            // Animate zoom in fullscreen but skip the first transition
+            TargetElement.offsetWidth;
+            TargetElement.style.transition = "width 2s, height 2s, scale 2s";
+          }
           break;
         case "ImageView":
-          TargetElement = document.getElementById( "ImageObj" );
-          TargetElement.style.scale = ( ZoomFloat * 100) + "%";
+          TargetElement = document.getElementById( "ImageView" );
+          TargetElement.style.scale = ( ZoomFloat * 100 ) + "%";
           break;
       }
     }
@@ -109,15 +117,17 @@
       SwitchView( "TextView" );
     }
     function HandleURL( url ) {
-      document.getElementById( "WebIframe" ).src = url;
+      document.getElementById( "StartBtn" ).disabled = true;
+      document.getElementById( "WebView" ).src = url;
       SwitchView( "LoadView" );
     }
     function HandleURLFullRes( url ) {
-      document.getElementById( "FullWebIframe" ).src = url;
+      document.getElementById( "StartBtn" ).disabled = true;
+      document.getElementById( "FullWebView" ).src = url;
       SwitchView( "LoadView" );
     }
     function HandleImage( data ) {
-      document.getElementById( "ImageObj" ).src = data;
+      document.getElementById( "ImageView" ).src = data;
       SwitchView( "ImageView" );
     }
     function HandleVideo( data ) {
@@ -126,68 +136,108 @@
       document.getElementById( "VideoView" ).load();
     }
 
-    var Connection;
-    function Connect( NewConnection ) {
-      console.log( "New connection received" );
-      // Do not connect if connection already exists
-      if ( Connection ) { return; }
-      Connection = NewConnection;
-      // Add connection events
-      Connection.onmessage = ( Message ) => {
-        var data = JSON.parse( Message.data );
-        switch( data[0] ) {
-          case "text":
-            HandleText( data[1] );
-            break;
-          case "url":
-            HandleURL( data[1] );
-            break;
-          case "urlfullres":
-            HandleURLFullRes( data[1] );
-            break;
-          case "image":
-            HandleImage( data[1] );
-            break;
-          case "video":
-            HandleVideo( data[1] );
-            break;
-          case "zoomin":
-            CurrentZoom = Math.min( CurrentZoom + 0.2 , 5 );
-            ZoomView( CurrentZoom );
-            break;
-          case "zoomout":
-            CurrentZoom = Math.max( CurrentZoom - 0.2 , 0.2 );
-            ZoomView( CurrentZoom );
-            break;
-          case "darkmode":
-            SetDarkMode( data[1] );
-            break;
-          default:
-            console.log( "Invalid message received: " + Message.data )
+    window.addEventListener( "message", ( Event ) => {
+      var data = JSON.parse( Event.data );
+      switch( data[0] ) {
+        case "text":
+          HandleText( data[1] );
+          break;
+        case "url":
+          HandleURL( data[1] );
+          break;
+        case "urlfullres":
+          HandleURLFullRes( data[1] );
+          break;
+        case "image":
+          HandleImage( data[1] );
+          break;
+        case "video":
+          HandleVideo( data[1] );
+          break;
+        case "zoomin":
+          CurrentZoom = Math.min( CurrentZoom + 0.2 , 5 );
+          ZoomView( CurrentZoom );
+          break;
+        case "zoomout":
+          CurrentZoom = Math.max( CurrentZoom - 0.2 , 0.2 );
+          ZoomView( CurrentZoom );
+          break;
+        case "darkmode":
+          SetDarkMode( data[1] );
+          break;
+        default:
+          console.log( "Invalid message received: " + Message.data )
+      }
+    });
+
+    var SelectedScreen;
+    async function PopulateDisplays() {
+      const PrevSelectedScreen = localStorage.getItem( "SelectedScreen" );
+      const ScreenDetails = await window.getScreenDetails();
+      ScreenDetails.screens.forEach( ( Screen, Index ) => {
+        const NewMenuItem = document.getElementById( "DisplayMenuTemplate" ).cloneNode( true );
+        const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
+        NewMenuItem.querySelector( "a.dropdown-item" ).textContent = ( Screen.isPrimary ) ? DisplayName + " (Main)" : DisplayName;
+        NewMenuItem.onclick = () => {
+          SelectedScreen = Screen;
+          document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
+          if ( Screen.label != "" && PrevSelectedScreen != Screen.label ) { localStorage.setItem( "SelectedScreen", Screen.label ); }
+        };
+        // Use previous selected screen if present
+        if ( PrevSelectedScreen != "" && PrevSelectedScreen == Screen.label ) {
+          console.log( "Selecting last used screen: " + Screen.label );
+          NewMenuItem.onclick();
         }
-      };
-      console.log( "Sending ready message" );
-      Connection.send( "load" );
+        NewMenuItem.style.display = "";
+        document.getElementById( "DisplayMenu" ).appendChild( NewMenuItem );
+      });
+      // Auto-select if previous screen not found and only two screens
+      if ( !SelectedScreen && ScreenDetails.screens.length == 2 ) {
+        ScreenDetails.screens.forEach( ( Screen ) => {
+          if ( !Screen.isPrimary ) {
+            console.log( "Auto-selecting screen: " + Screen.label );
+            SelectedScreen = Screen;
+            const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
+            document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
+            if ( Screen.label != "" && PrevSelectedScreen != Screen.label ) { localStorage.setItem( "SelectedScreen", Screen.label ); }
+          }
+        });
+      }
+    }
+
+    StartBtn.onclick = () => {
+      document.getElementById( "PresentationElement" ).requestFullscreen( { screen: SelectedScreen } );
     }
 
     window.addEventListener( "load", () => {
-      // When loaded, handle incoming connections
-      navigator.presentation.receiver.connectionList.then( ( ConnList ) => {
-        if ( ConnList.connections[0] ) {
-          Connect( ConnList.connections[0] );
-        } else {
-          ConnList.onconnectionavailable = ( Event ) => { Connect( Event.connection ); };
-        }
-      });
+      PopulateDisplays();
     });
 
-    document.getElementById( "WebIframe" ).addEventListener( "load", () => {
+    document.addEventListener( "fullscreenchange", () => {
+      if ( document.fullscreenElement ) {
+        // Refit to screen when entering fullscreen
+        ZoomView( CurrentZoom );
+      } else {
+        // Close preview window when exiting fullscreen
+        close();
+      }
+    });
+
+    document.getElementById( "WebView" ).addEventListener( "load", () => {
       SwitchView( "WebView" );
+      document.getElementById( "StartBtn" ).disabled = false;
     });
 
-    document.getElementById( "FullWebIframe" ).addEventListener( "load", () => {
+    document.getElementById( "FullWebView" ).addEventListener( "load", () => {
       SwitchView( "FullWebView" );
+      document.getElementById( "StartBtn" ).disabled = false;
     });
+
+    document.addEventListener( "keydown" , function( Event ) {
+      if ( Event.key == "Escape" ) {
+      close();
+    }
+});
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
