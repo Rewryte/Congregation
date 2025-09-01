@@ -117,10 +117,12 @@
       SwitchView( "TextView" );
     }
     function HandleURL( url ) {
+      document.getElementById( "StartBtn" ).disabled = true;
       document.getElementById( "WebView" ).src = url;
       SwitchView( "LoadView" );
     }
     function HandleURLFullRes( url ) {
+      document.getElementById( "StartBtn" ).disabled = true;
       document.getElementById( "FullWebView" ).src = url;
       SwitchView( "LoadView" );
     }
@@ -223,10 +225,12 @@
 
     document.getElementById( "WebView" ).addEventListener( "load", () => {
       SwitchView( "WebView" );
+      document.getElementById( "StartBtn" ).disabled = false;
     });
 
     document.getElementById( "FullWebView" ).addEventListener( "load", () => {
       SwitchView( "FullWebView" );
+      document.getElementById( "StartBtn" ).disabled = false;
     });
 
     document.addEventListener( "keydown" , function( Event ) {
