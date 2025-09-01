@@ -306,7 +306,7 @@
       if ( !PresentationWindow || PresentationWindow.closed ) {
         console.log( "Starting presentation" );
         Busy = true;
-        PresentationWindow = window.open( "presentation.html", "CongregationPresentations" , "popup" );
+        PresentationWindow = window.open( "presentation.html", "CongregationPresentations" , "popup, width=600, height=420" );
         PresentationWindow.onload = () => {
           console.log( "Presentation window ready" );;
           SetVisible( "StopBtn", true );
