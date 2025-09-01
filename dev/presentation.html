@@ -25,10 +25,14 @@
     </div>
   </div>
   <div class="container">
-    <h3>Select presentation display from the list below</h3>
-    <div id="DisplayList" class="list-group">
-      <button id="DisplayBtnTemplate" type="button" class="list-group-item list-group-item-action list-group-item-primary" style="display: none;"></button>
+    <h3>Display:</h3>
+    <div class="dropdown">
+      <button id="DisplayDropdown" class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+      <ul id="DisplayMenu" class="dropdown-menu">
+        <li id="DisplayMenuTemplate" style="display: none;"><a class="dropdown-item">Label</a></li>
+      </ul>
     </div>
+    <button id="StartBtn" type="button" class="btn btn-primary btn-lg">Start</button>
   </div>
   <script>
     var CurrentView = "LoadView";
@@ -158,20 +162,24 @@
       }
     });
 
+    var SelectedScreen;
     async function PopulateDisplays() {
-      ScreenDetails = await window.getScreenDetails();
+      const ScreenDetails = await window.getScreenDetails();
       ScreenDetails.screens.forEach( ( Screen, Index ) => {
-        const NewButton = document.getElementById( "DisplayBtnTemplate" ).cloneNode(true);
+        const NewMenuItem = document.getElementById( "DisplayMenuTemplate" ).cloneNode( true );
         const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
-        NewButton.textContent = ( Screen.isPrimary ) ? DisplayName + " (Main)" : DisplayName;
-        NewButton.onclick = () => SetDisplay( Screen );
-        NewButton.style.display = "";
-        document.getElementById( "DisplayList" ).appendChild( NewButton );
+        NewMenuItem.querySelector( "a.dropdown-item" ).textContent = ( Screen.isPrimary ) ? DisplayName + " (Main)" : DisplayName;
+        NewMenuItem.onclick = () => {
+          SelectedScreen = Screen;
+          document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
+        };
+        NewMenuItem.style.display = "";
+        document.getElementById( "DisplayMenu" ).appendChild( NewMenuItem );
       });
     }
 
-    function SetDisplay( Screen ) {
-      document.getElementById( "PresentationElement" ).requestFullscreen( { screen: Screen } );
+    StartBtn.onclick = () => {
+      document.getElementById( "PresentationElement" ).requestFullscreen( { screen: SelectedScreen } );
     }
 
     window.addEventListener( "load", () => {
