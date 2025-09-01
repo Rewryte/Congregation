@@ -176,7 +176,10 @@
           if ( Screen.label != "" && PrevSelectedScreen != Screen.label ) { localStorage.setItem( "SelectedScreen", Screen.label ); }
         };
         // Use previous selected screen if present
-        if ( PrevSelectedScreen != "" && PrevSelectedScreen == Screen.label ) { NewMenuItem.onclick(); }
+        if ( PrevSelectedScreen != "" && PrevSelectedScreen == Screen.label ) {
+          console.log( "Selecting last used screen: " + Screen.label );
+          NewMenuItem.onclick();
+        }
         NewMenuItem.style.display = "";
         document.getElementById( "DisplayMenu" ).appendChild( NewMenuItem );
       });
@@ -184,6 +187,7 @@
       if ( !SelectedScreen && ScreenDetails.screens.length == 2 ) {
         ScreenDetails.screens.forEach( ( Screen ) => {
           if ( !Screen.isPrimary ) {
+            console.log( "Auto-selecting screen: " + Screen.label );
             SelectedScreen = Screen;
             const DisplayName = ( Screen.label ) ? Screen.label : ( Screen.isInternal ) ? "Built-in Display" : "Display " + Index;
             document.getElementById( "DisplayDropdown" ).textContent = DisplayName;
